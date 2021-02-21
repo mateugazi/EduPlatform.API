@@ -26,6 +26,6 @@
     "spec/**/*.ts"
   ],
   "exclude": [
-    "src/public/"
+    "node_modules"
   ]
 }

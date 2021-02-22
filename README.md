@@ -22,6 +22,8 @@ The project has installed many dependencies, but the most important one are:
  - jest for testing
  - prettier for code formatting
  - tslint for code analyzing
+ - bcrypt for encrypting passwords
+ - jsonwebtoken for sending tokens
 
 ### Scripts
 For starting the server:

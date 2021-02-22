@@ -1,6 +1,8 @@
 require('dotenv').config()
 import express, { Request, Response, NextFunction, Router, Express } from 'express';
 import mongoose from 'mongoose'
+import morgan from 'morgan'
+import bodyParser from 'body-parser'
 
 const app = express();
 
@@ -9,5 +11,29 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MO
     useUnifiedTopology: true,
   }).then(() => console.log("mongodb connected")).catch(err => console.log(err))
 
+app.use(morgan('dev'))
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    )
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
+        return res.status(200).json({})
+    }
+    next()
+})
+
+app.use('/', (req: Request, res:Response) => {
+    res.status(404).json({
+        error: {
+            message: "the route was not found"
+        }
+    })
+})
 
 export default app;

@@ -25,3 +25,5 @@ const projectSchema = new mongoose.Schema({
         type: Number,
     }
 })
+
+export default mongoose.model('projectSchema', projectSchema);

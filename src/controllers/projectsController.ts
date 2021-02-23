@@ -2,8 +2,13 @@ import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import projectSchema from '../models/projectSchema';
 
-exports.projects_get_all = (req: Request, res: Response, next: Function) => {
-
+exports.projects_get_all = (req: Request, res: Response) => {
+    projectSchema
+        .find({})
+        .exec()
+        .then( response => {
+            res.status(200).json(response)
+        })
 }
 
 exports.projects_add_new_project = (req: Request, res: Response) => {

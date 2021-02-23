@@ -6,8 +6,13 @@ exports.projects_get_all = (req: Request, res: Response) => {
     projectSchema
         .find({})
         .exec()
-        .then( response => {
+        .then(response => {
             res.status(200).json(response)
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: error
+            })
         })
 }
 

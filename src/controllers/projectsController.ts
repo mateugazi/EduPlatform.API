@@ -16,6 +16,22 @@ exports.projects_get_all = (req: Request, res: Response) => {
         })
 }
 
+exports.projects_get_single = (req: Request, res: Response) => {
+    const id = req.params.projectId
+    console.log(id)
+    projectSchema
+        .findById(id)
+        .exec()
+        .then(document => {
+            res.status(200).json(document)
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: error
+            })
+        })
+}
+
 exports.projects_add_new_project = (req: Request, res: Response) => {
     const newProject = new projectSchema({
         _id: new mongoose.Types.ObjectId(),

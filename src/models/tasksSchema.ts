@@ -1,8 +1,13 @@
-import mongoose from 'mongoose';
+import {model, Schema, Model, Document} from 'mongoose';
 
 //dane tylko na użytek działania modelu zanim powstaną inne API
 
-const userSchema = new mongoose.Schema({
+interface IUser extends Document{
+    name: string,
+    deadline: number,
+}
+
+const userSchema:Schema = new Schema({
     name: {
         type: String,
         required: true,
@@ -15,9 +20,13 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-export const User = mongoose.model('User', userSchema);
+export const User:Model<IUser> = model<IUser>('User', userSchema);
 
-const projectSchema = new mongoose.Schema( {
+interface IProject extends Document{
+    name: string, 
+}
+
+const projectSchema:Schema = new Schema( {
     name: {
         type: String,
         required: true,
@@ -26,11 +35,20 @@ const projectSchema = new mongoose.Schema( {
     }
 });
 
-export const Project = mongoose.model('Project', projectSchema)
+export const Project: Model<IProject> = model<IProject>('Project', projectSchema)
 
 //schematy dla tasku
 
-export const taskSchema = new mongoose.Schema( {
+interface ITask extends Document{
+    name: string,
+    description: string,
+    deadline: number,
+    done: boolean,
+    user?: number,
+    project?: number
+}
+
+export const taskSchema:Schema = new Schema( {
     description: {
         type: String,
         required: true,
@@ -53,5 +71,5 @@ export const taskSchema = new mongoose.Schema( {
     }
 });
 
-export const Task = mongoose.model('Task', taskSchema);
+export const Task: Model<ITask> = model<ITask>('Task', taskSchema);
 

@@ -2,11 +2,11 @@ import {model, Schema, Model, Document} from 'mongoose';
 
 //dane tylko na użytek działania modelu zanim powstaną inne API
 
-interface IUser extends Document{
-    name: string,
-}
+// interface IUser extends Document{
+//     name: string,
+// }
 
-const userSchema:Schema<IUser> = new Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -15,14 +15,14 @@ const userSchema:Schema<IUser> = new Schema({
     }
 });
 
-export const User:Model<IUser> = model<IUser>('User', userSchema);
+export const User = model('User', userSchema);
 
-interface IProject extends Document{
-    name: string, 
-    deadline: number,
-}
+// interface IProject {
+//     name: string, 
+//     deadline: number,
+// }
 
-const projectSchema:Schema<IProject> = new Schema( {
+const projectSchema = new Schema( {
     name: {
         type: String,
         required: true,
@@ -35,20 +35,20 @@ const projectSchema:Schema<IProject> = new Schema( {
     }
 });
 
-export const Project: Model<IProject> = model<IProject>('Project', projectSchema)
+export const Project = model('Project', projectSchema)
 
 //schematy dla tasku
 
-interface ITask extends Document{
-    name: string,
-    description: string,
-    deadline: number,
-    done: boolean,
-    user?: Schema<IUser>,
-    project?: Schema<IProject>
-}
+// interface ITask extends Document{
+//     name: string,
+//     description: string,
+//     deadline: number,
+//     done: boolean,
+//     user?: Schema<IUser>,
+//     project?: Schema<IProject>
+// }
 
-export const taskSchema:Schema<ITask> = new Schema( {
+export const taskSchema = new Schema( {
     name: {
         type: String,
         required: true,
@@ -69,13 +69,13 @@ export const taskSchema:Schema<ITask> = new Schema( {
         type: Boolean,
         required: true
     },
-    user: {
-        type: userSchema,
-    },
-    project: {
-        type: projectSchema,
-    }
+    // user: {
+    //     type: userSchema,
+    // },
+    // project: {
+    //     type: projectSchema,
+    // }
 });
 
-export const Task: Model<ITask> = model<ITask>('Task', taskSchema);
+export const Task = model('Task', taskSchema);
 

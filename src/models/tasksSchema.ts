@@ -4,10 +4,25 @@ import {model, Schema, Model, Document} from 'mongoose';
 
 interface IUser extends Document{
     name: string,
+}
+
+const userSchema:Schema<IUser> = new Schema({
+    name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 255
+    }
+});
+
+export const User:Model<IUser> = model<IUser>('User', userSchema);
+
+interface IProject extends Document{
+    name: string, 
     deadline: number,
 }
 
-const userSchema:Schema = new Schema({
+const projectSchema:Schema<IProject> = new Schema( {
     name: {
         type: String,
         required: true,
@@ -20,21 +35,6 @@ const userSchema:Schema = new Schema({
     }
 });
 
-export const User:Model<IUser> = model<IUser>('User', userSchema);
-
-interface IProject extends Document{
-    name: string, 
-}
-
-const projectSchema:Schema = new Schema( {
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 255
-    }
-});
-
 export const Project: Model<IProject> = model<IProject>('Project', projectSchema)
 
 //schematy dla tasku
@@ -44,11 +44,17 @@ interface ITask extends Document{
     description: string,
     deadline: number,
     done: boolean,
-    user?: number,
-    project?: number
+    user?: Schema<IUser>,
+    project?: Schema<IProject>
 }
 
-export const taskSchema:Schema = new Schema( {
+export const taskSchema:Schema<ITask> = new Schema( {
+    name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 255
+    },
     description: {
         type: String,
         required: true,

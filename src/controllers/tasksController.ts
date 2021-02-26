@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
+import {Types} from 'mongoose';
 import {Task} from '../models/tasksSchema';
 
 export const AllTasks =  async (req:Request, res:Response) => {
@@ -8,18 +8,23 @@ export const AllTasks =  async (req:Request, res:Response) => {
 }
 
 export const TaskById = async (req:Request, res:Response) => {
+
+    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Id is not valid')
+
     const task = await Task.findById(req.params.id);
 
-    task ? res.send(task) : res.status(404).send('Task not found')
+    task ? res.send(task._id) : res.status(404).send('Task not found')
 }
 
 export const AddTask = async (req:Request, res:Response) => {
+
     let task = new Task({
-            name: req.body.description,
-            description: req.body.description,
-            deadline: req.body.deadline,
-            done: false,
-        })
+        _id: new Types.ObjectId(),
+        name: req.body.description,
+        description: req.body.description,
+        deadline: req.body.deadline,
+        done: false,
+    })
     
     task = await task.save();
     
@@ -28,6 +33,8 @@ export const AddTask = async (req:Request, res:Response) => {
 }
 
 export const UpdateTask = async (req:Request,res:Response) => {
+
+    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Id is not valid')
 
     let taskData =  {
             description: req.body.description,
@@ -44,6 +51,8 @@ export const UpdateTask = async (req:Request,res:Response) => {
 
 export const DeleteTask = async (req: Request, res: Response) => {
 
+    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Id is not valid')
+
     const task = await Task.findByIdAndRemove(req.params.id)
 
     if (!task) {
@@ -52,3 +61,4 @@ export const DeleteTask = async (req: Request, res: Response) => {
 
     res.send(task)
 }
+

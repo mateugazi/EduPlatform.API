@@ -1,54 +1,55 @@
-import {model, Schema, Model, Document} from 'mongoose';
+import {model, Schema, Document, Types} from 'mongoose';
+import {projectSchema} from './projectSchema';
 
 //dane tylko na użytek działania modelu zanim powstaną inne API
 
-// interface IUser extends Document{
+// export interface IUser extends Document{
 //     name: string,
 // }
 
-const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 255
-    }
-});
+// const userSchema = new Schema<IUser>({
+//     name: {
+//         type: String,
+//         required: true,
+//         minlength: 5,
+//         maxlength: 255
+//     }
+// });
 
-export const User = model('User', userSchema);
+// export const User = model('User', userSchema);
 
-// interface IProject {
-//     name: string, 
-//     deadline: number,
+// interface IProject extends Document {
+//     title: string, 
 // }
 
-const projectSchema = new Schema( {
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 255
-    },
-    deadline: {
-        type: Number,
-        required: true
-    }
-});
+// const projectSchema = new Schema<IProject>( {
+//     name: {
+//         type: String,
+//         required: true,
+//         minlength: 5,
+//         maxlength: 255
+//     },
+//     deadline: {
+//         type: Number,
+//         required: true
+//     }
+// });
 
-export const Project = model('Project', projectSchema)
+// export const Project = model('Project', projectSchema)
 
 //schematy dla tasku
 
-// interface ITask extends Document{
-//     name: string,
-//     description: string,
-//     deadline: number,
-//     done: boolean,
-//     user?: Schema<IUser>,
-//     project?: Schema<IProject>
-// }
+export interface ITask extends Document{
+    _id: Types.ObjectId,
+    name: string,
+    description: string,
+    deadline: number,
+    done: boolean,
+    project?: Schema
+}
 
-export const taskSchema = new Schema( {
+export const taskSchema = new Schema<ITask>( {
+    _id: Schema.Types.ObjectId,
     name: {
         type: String,
         required: true,
@@ -72,9 +73,9 @@ export const taskSchema = new Schema( {
     // user: {
     //     type: userSchema,
     // },
-    // project: {
-    //     type: projectSchema,
-    // }
+    project: {
+        type: projectSchema
+    }
 });
 
 export const Task = model('Task', taskSchema);

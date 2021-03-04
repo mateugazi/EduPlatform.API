@@ -71,7 +71,7 @@ export const AddTask = async (req:Request, res:Response) => {
     } else {
         task = new Task({
             _id: new Types.ObjectId(),
-            name: req.body.description,
+            name: req.body.name,
             description: req.body.description,
             deadline: req.body.deadline,
             done: false,

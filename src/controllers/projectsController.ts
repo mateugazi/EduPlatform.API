@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
+import {Types} from 'mongoose';
 import projectSchema from '../models/projectSchema';
 
 exports.projects_get_all = (req: Request, res: Response) => {
@@ -18,7 +19,9 @@ exports.projects_get_all = (req: Request, res: Response) => {
 
 exports.projects_get_single = (req: Request, res: Response) => {
     const id = req.params.projectId
-    console.log(id)
+
+    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Id is not valid')
+    
     projectSchema
         .findById(id)
         .exec()
@@ -37,6 +40,7 @@ exports.projects_add_new_project = (req: Request, res: Response) => {
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
         description: req.body.description,
+        mentor: req.body.mentor,
         authors: req.body.authors,
         linkToDemo: req.body.linkToDemo,
         linkToGitHub: req.body.linkToGitHub,
@@ -49,6 +53,31 @@ exports.projects_add_new_project = (req: Request, res: Response) => {
                 message: 'Project added successfully!',
                 response: response
               });
+        })
+        .catch( error => {
+            res.status(500).json({
+                error: error
+            })
+        })
+}
+
+exports.projects_delete_project = (req: Request, res: Response) => {
+
+    Types.ObjectId.isValid(req.params.projectId) ? null : res.status(400).send('Id is not valid')
+
+    projectSchema.findByIdAndRemove(req.params.projectId)
+        .exec()
+        .then(doc => {
+            if (doc) {
+                res.status(200).json({
+                    message: "Deleted successfully",
+                    project: doc
+                })
+            } else {
+                res.status(404).json({
+                    message: "No data to delete"
+                })
+            }      
         })
         .catch( error => {
             res.status(500).json({

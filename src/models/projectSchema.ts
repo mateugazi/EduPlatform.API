@@ -10,6 +10,10 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    mentor: {
+        type: String,
+        required: true
+    },
     authors: {
         type: Array,
         required: true

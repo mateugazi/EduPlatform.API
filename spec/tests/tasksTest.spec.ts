@@ -66,10 +66,8 @@ describe('/tasks', () => {
     it('GET /:id', async done => {
         const task = new Task(newTask);
         await task.save()
-        console.log(task._id)
         const response = await request.get('/' + task._id)
-        .expect(200)
-        
+        .expect(200, JSON.stringify(task._id))
         done()
     });
 
@@ -79,12 +77,6 @@ describe('/tasks', () => {
         const response = await request.delete('/' + task._id)
         .expect(200);
 
-        done()
-    })
-
-    it('POST /', async done => {
-        const response = await request.post('/').send(newTask)
-        .expect(200);
         done()
     })
 
@@ -102,12 +94,27 @@ describe('/tasks', () => {
         done()
     })
 
-    it('POST / with Project ID', async done => {
-        const project = new Project(newProject)
-        await project.save()
-        const response = await request.post('/').send({...newTask, projectId: project._id})
-        .expect(200);
-        done()
+    describe ('POST /', () => {
+
+        it('whithout embeded Project Id', async done => {
+            const response = await request.post('/').send(newTask)
+            .expect(200);
+            done()
+        });
+
+        it('with Project Id', async done => {
+            const project = new Project(newProject)
+            await project.save()
+            await request.post('/').send({...newTask, projectId: project._id})
+            .expect(200);
+            done()
+        });
+
+        it('with Project Id - not present in database', async done => {
+            await request.post('/').send({...newTask, projectId: '6043cf5f980add1944946a23'})
+            .expect(404);
+            done()
+        });
     })
 
 })

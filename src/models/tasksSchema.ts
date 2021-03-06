@@ -2,7 +2,7 @@ import {model, Schema, Document, Types} from 'mongoose';
 import {projectSchema} from './projectSchema';
 
 export interface ITask extends Document{
-    _id: Types.ObjectId,
+    _id: string,
     name: string,
     description: string,
     deadline: number,
@@ -11,7 +11,9 @@ export interface ITask extends Document{
 }
 
 export const taskSchema = new Schema<ITask>( {
-    _id: Schema.Types.ObjectId,
+    _id: {
+        type: String,
+    },
     name: {
         type: String,
         required: true,

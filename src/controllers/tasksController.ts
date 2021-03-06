@@ -10,42 +10,70 @@ export const AllTasks =  async (req:Request, res:Response) => {
 
 export const TaskById = async (req:Request, res:Response) => {
 
-    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Id is not valid')
+    if (!Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).send('Id is invalid')
+    }
     const task = await Task.findById(req.params.id);
 
-    task ? res.send(task._id) : res.status(404).send('Task not found')
+    if (!task) {
+        return res.status(404).send('Task not found')
+    } 
+    res.send(task._id) 
 }
 
 export const TasksByProject = async (req:Request, res:Response) => {
-    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Project Id is not valid');
+
+    if (!Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).send('Project Id is not valid');
+    } 
 
     const tasksByProject = await Task.find({"project._id": req.params.id});
 
-    tasksByProject.length > 0 ? res.send(tasksByProject) : res.status(404).send('Tasks not found')
+    if (tasksByProject.length > 0) {
+        return res.send(tasksByProject)
+    } 
+    
+    res.status(404).send('Tasks not found or incorrect id for project')
+    
 }
 
 export const TasksByUser = async (req:Request, res:Response) => {
-    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('User Id is not valid');
+
+    if(!Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).send('User Id is not valid');
+    }
 
     const tasksByUser = await Task.find({"user._id": req.params.id});
 
-    tasksByUser.length > 0 ? res.send(tasksByUser) : res.status(404).send('Tasks not found')
+    if (tasksByUser.length > 0) {
+        return res.send(tasksByUser)
+    } 
+    res.status(404).send('Tasks not found')
 }
 
 export const TasksByUserAndProject = async (req: Request, res: Response) => {
-    Types.ObjectId.isValid(req.params.projectId) ? null : res.status(400).send('Project Id is not valid');
-    Types.ObjectId.isValid(req.params.userId) ? null : res.status(400).send('User Id is not valid');
+    if (!Types.ObjectId.isValid(req.params.projectId)) {
+        return res.status(400).send('Project Id is not valid');
+    } 
+    if (!Types.ObjectId.isValid(req.params.userId)) {
+        return res.status(400).send('Project Id is not valid');
+    }
 
     const tasksByUserAndProject = await Task.find({"user._id": req.params.id, "project._id": req.params.id});
 
-    tasksByUserAndProject.length > 0 ? res.send(tasksByUserAndProject) : res.status(404).send('Tasks not found')
+    if (tasksByUserAndProject.length > 0) {
+        return res.send(tasksByUserAndProject)
+    }
+    res.status(404).send('Tasks not found')
 }
 
 export const AddTask = async (req:Request, res:Response) => {
 
     let task;
     if (req.body.projectId) {
-        Types.ObjectId.isValid(req.body.projectId) ? null : res.status(400).send('Project Id is not valid')
+        if(!Types.ObjectId.isValid(req.body.projectId)) {
+            return res.status(400).send('Project Id is invalid')
+        }
         const projectData = await Project.findById(req.body.projectId);
 
         if (!projectData) {
@@ -86,7 +114,9 @@ export const AddTask = async (req:Request, res:Response) => {
 
 export const UpdateTask = async (req:Request,res:Response) => {
 
-    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Id is not valid')
+    if(!Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).send('Id is not valid')
+    }
 
     let taskData =  {
             _id: req.params.id,
@@ -99,13 +129,18 @@ export const UpdateTask = async (req:Request,res:Response) => {
     const task = await Task.findByIdAndUpdate(req.params.id, 
         taskData,
         {new: true});
-
+    
+    if(!task) {
+        return res.status(404).send('No task to update')
+    }
     res.send(task)
 }
 
 export const DeleteTask = async (req: Request, res: Response) => {
 
-    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Id is not valid')
+    if(!Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).send('Id is not valid');
+    } 
 
     const task = await Task.findByIdAndRemove(req.params.id)
 

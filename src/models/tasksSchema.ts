@@ -1,44 +1,6 @@
 import {model, Schema, Document, Types} from 'mongoose';
 import {projectSchema} from './projectSchema';
 
-//dane tylko na użytek działania modelu zanim powstaną inne API
-
-// export interface IUser extends Document{
-//     name: string,
-// }
-
-// const userSchema = new Schema<IUser>({
-//     name: {
-//         type: String,
-//         required: true,
-//         minlength: 5,
-//         maxlength: 255
-//     }
-// });
-
-// export const User = model('User', userSchema);
-
-// interface IProject extends Document {
-//     title: string, 
-// }
-
-// const projectSchema = new Schema<IProject>( {
-//     name: {
-//         type: String,
-//         required: true,
-//         minlength: 5,
-//         maxlength: 255
-//     },
-//     deadline: {
-//         type: Number,
-//         required: true
-//     }
-// });
-
-// export const Project = model('Project', projectSchema)
-
-//schematy dla tasku
-
 export interface ITask extends Document{
     _id: Types.ObjectId,
     name: string,

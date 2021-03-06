@@ -71,19 +71,31 @@ describe('/tasks', () => {
         done()
     });
 
-    it('DELETE /:id', async done => {
-        const task = new Task(newTask);
-        await task.save()
-        const response = await request.delete('/' + task._id)
-        .expect(200);
+    describe ('DELETE /:id', () => {
+        
+        it('with correct Id', async done => {
+            const task = new Task(newTask);
+            await task.save()
+            await request.delete('/' + task._id)
+            .expect(200);
 
-        done()
+            done()
+        });
+
+        it('with incorrect Id', async done => {
+            const task = new Task(newTask);
+            await task.save()
+            await request.delete('/6043cf5f980add1944946a23')
+            .expect(404);
+
+            done() 
+        })
     })
 
     it('PUT /:id', async done => {
         const task = new Task(newTask);
         await task.save();
-        const response = await request.put('/' + task._id).send(newTask)
+        await request.put('/' + task._id).send(newTask)
         .send({name: 'Test task',
         description: 'This is test task',
         deadline: 1615923590,

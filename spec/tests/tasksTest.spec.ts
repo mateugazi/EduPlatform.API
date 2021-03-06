@@ -23,7 +23,7 @@ const newTask = {
 }
 
 const newProject = {
-    _id: new String(new mongoose.Types.ObjectId()),
+    _id: new mongoose.Types.ObjectId(),
     title: "First project",
     description: "First firs",
     authors: ["First", "Second"],
@@ -86,7 +86,7 @@ describe('/tasks', () => {
             await task.save()
             const response = await request.get('/' + task._id);
             expect(response.status).toEqual(200);
-            expect(response.text).toEqual(task._id);
+            expect(JSON.stringify(response.body)).toEqual(JSON.stringify(task._id));
             done()
         });
 

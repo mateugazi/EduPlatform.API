@@ -11,17 +11,25 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
     })
   }
   else {
-    const group = new groupSchema({
-      _id: mongoose.Types.ObjectId(),
-      groupName: req.body.groupName,
-      mentor: userMentor
-    })
-    console.log(group)
-    res.status(201).json({
-      message: "Group created",
-      createdGroup: {
-        group
-      }
-    })
+    const groupName = await groupSchema.findOne({ groupName: req.body.groupName })
+    if (groupName) {
+      res.status(404).json({
+        message: "This group name is already taken"
+      })
+    }
+    else {
+      const group = new groupSchema({
+        _id: mongoose.Types.ObjectId(),
+        groupName: req.body.groupName,
+        mentor: userMentor
+      })
+      console.log(group)
+      res.status(201).json({
+        message: "Group created",
+        createdGroup: {
+          group
+        }
+      })
+    }
   }
 };

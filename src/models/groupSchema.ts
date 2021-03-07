@@ -7,18 +7,9 @@ const userSchema = new mongoose.Schema({
         ref: 'userSchema',
         required: true
     },
-    email: {
+    groupName: {
         type: String,
-        required: true,
-        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-    },
-    secondMentor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'userSchema',
-    },
-    secondMentorEmail: {
-        type: String,
-        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        required: true
     },
     members: [{
         user: {

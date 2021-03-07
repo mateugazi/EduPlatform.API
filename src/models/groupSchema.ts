@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const userSchema = new mongoose.Schema({
+const groupSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     mentor: {
         type: mongoose.Schema.Types.ObjectId,
@@ -19,4 +19,4 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
-export default mongoose.model('userSchema', userSchema)
+export default mongoose.model('groupSchema', groupSchema)

@@ -9,7 +9,8 @@ const groupSchema = new mongoose.Schema({
     },
     groupName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     members: [{
         user: {

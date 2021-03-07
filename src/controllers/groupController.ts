@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import groupSchema from '../models/groupSchema';
 import userSchema from '../models/userSchema';
 
-export const groupContoller = async (req: Request, res: Response) => {
+export const groupCreateGroup = async (req: Request, res: Response) => {
   const userMentor = await userSchema.findOne({email: req.body.email})
   if (!userMentor) {
     return res.status(404).json({

@@ -4,7 +4,7 @@ import groupSchema from '../models/groupSchema';
 import userSchema from '../models/userSchema';
 
 export const groupCreateGroup = async (req: Request, res: Response) => {
-  const userMentor = await userSchema.findOne({email: req.body.email})
+  const userMentor = await userSchema.findById(req.body.mentor)
   if (!userMentor) {
     return res.status(404).json({
       message: "Mentor not found"
@@ -14,16 +14,14 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
     const group = new groupSchema({
       _id: mongoose.Types.ObjectId(),
       groupName: req.body.groupName,
-      mentor: req.body.mentor,
+      mentor: userMentor
     })
+    console.log(group)
     res.status(201).json({
-      message: 'Group created',
-      /*createdGroup: {
-        _id: group._id,
-        groupName: group.groupName,
-
-        mentor: group.mentor,
-      }*/
+      message: "Group created",
+      createdGroup: {
+        group
+      }
     })
   }
 };

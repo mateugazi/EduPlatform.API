@@ -41,3 +41,25 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
     })
   }
 };
+
+export const groupGetSingleGroup = (req: Request, res: Response) => {
+  const id = req.params.groupId
+  groupSchema.findById(id)
+    .select('_id groupName mentor members')
+    .exec()
+    .then(result => {
+      if (!result) {
+        return res.status(404).json({
+          message: 'Group not found'
+        })
+      }
+      res.status(200).json({
+        result
+      })
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      })
+    })
+}

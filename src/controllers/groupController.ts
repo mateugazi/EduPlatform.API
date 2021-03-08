@@ -42,6 +42,23 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
   }
 };
 
+export const groupGetAllGroup = (req: Request, res: Response) => {
+    groupSchema.find()
+    .select('_id groupName mentor members')
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        numberOfGroups: result.length,
+        result
+      })
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      })
+    })
+}
+
 export const groupGetSingleGroup = (req: Request, res: Response) => {
   const id = req.params.groupId
   groupSchema.findById(id)

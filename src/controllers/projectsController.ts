@@ -18,15 +18,19 @@ exports.projects_get_all = (req: Request, res: Response) => {
 }
 
 exports.projects_get_single = (req: Request, res: Response) => {
-    const id = req.params.projectId
-
-    Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Id is not valid')
+    Types.ObjectId.isValid(req.params.projectId) ? null : res.status(400).send('Id is not valid')
     
     projectSchema
-        .findById(id)
+        .findById(req.params.projectId)
         .exec()
         .then(document => {
-            res.status(200).json(document)
+            if (document) {
+                res.status(200).json(document)
+            } else {
+                res.status(404).json({
+                    message: "Project not found"
+                })
+            }
         })
         .catch(error => {
             res.status(500).json({
@@ -62,7 +66,6 @@ exports.projects_add_new_project = (req: Request, res: Response) => {
 }
 
 exports.projects_delete_project = (req: Request, res: Response) => {
-
     Types.ObjectId.isValid(req.params.projectId) ? null : res.status(400).send('Id is not valid')
 
     projectSchema.findByIdAndRemove(req.params.projectId)

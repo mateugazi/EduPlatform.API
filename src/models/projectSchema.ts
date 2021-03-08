@@ -1,6 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
-const projectSchema = new mongoose.Schema({
+interface projectInterface extends mongoose.Document {
+    _id: Types.ObjectId,
+    title: string,
+    description: string,
+    mentor: string,
+    authors: Array<string>,
+    linkToDemo: string,
+    linkToGitHub: string,
+    timestamp: number
+}
+
+const projectSchema = new mongoose.Schema<projectInterface>({
     _id: mongoose.Schema.Types.ObjectId,
     title: {
         type: String,

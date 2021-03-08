@@ -4,14 +4,8 @@ import groupSchema from '../models/groupSchema';
 import userSchema from '../models/userSchema';
 
 export const groupCreateGroup = async (req: Request, res: Response) => {
+  try {
   const userMentor = await userSchema.findById(req.body.mentor)
-    try {
-    if (!userMentor) {
-      return res.status(404).json({
-        message: "Mentor not found"
-      })
-    }
-    else {
       const groupName = await groupSchema.findOne({ groupName: req.body.groupName })
       if (groupName) {
         res.status(404).json({
@@ -24,15 +18,23 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
           groupName: req.body.groupName,
           mentor: userMentor
         })
-        console.log(group)
-        res.status(201).json({
-          message: "Group created",
-          createdGroup: {
-            group
-          }
-        })
+        group.save()
+          .then(result => {
+            console.log(result)
+            res.status(201).json({
+              message: "Group created",
+              createdGroup: {
+                group
+              }
+            })
+          })
+        .catch(err => {
+          console.log(err)
+          res.status(500).json({
+            error: err
+          })
+        }) 
       }
-    }
   } catch (err) {
     res.status(500).json({
       err

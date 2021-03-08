@@ -9,6 +9,8 @@ projectsRouter.get('/:projectId', projectsController.projects_get_single)
 
 projectsRouter.post('', projectsController.projects_add_new_project);
 
+projectsRouter.put('/:projectId', projectsController.projects_update_project)
+
 projectsRouter.delete('/:projectId', projectsController.projects_delete_project)
 
 export default projectsRouter;

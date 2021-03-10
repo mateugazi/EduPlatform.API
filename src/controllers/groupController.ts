@@ -80,3 +80,29 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
       })
     })
 }
+
+export const groupAddMember = async (req: Request, res: Response) => {
+  const groupId = req.params.id
+  try {
+    const member = await userSchema.findOne({email: req.body.email})
+    groupSchema.updateOne({ _id: groupId }, { $push: { members: member } })
+      .exec()
+      .then(result => {
+        res.status(200).json({
+          message: 'User added',
+          member
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(500).json({
+          error: err
+        })
+      })
+  } catch(err) {
+    console.log(err)
+    res.status(500).json({
+      error: err
+    })
+  }
+}

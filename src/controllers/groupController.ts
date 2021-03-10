@@ -114,28 +114,35 @@ export const groupAddMember = async (req: Request, res: Response) => {
   }
 }
 
-export const groupDeleteMember = (req: Request, res: Response) => {
+export const groupDeleteMember = async (req: Request, res: Response) => {
   const groupId = req.params.groupId
   try {
-    const group: any = groupSchema.findById(groupId)
-    const member: any = userSchema.findById(req.body._id)
-    for(let i = 0; i < group.members.length; i++)
-    {
-      if(member._id.equals(group.members[i]._id)) {
-        group.members.update(
-          {},
-          { $pull: {_id: group.members[i]._id}},
-          { multi: false }
-        )
-        return res.status(200).json({
-          message: 'User deleted',
-          newGroup: group
-        })
+    const group: any = await groupSchema.findById(groupId)
+    const member: any = await userSchema.findById(req.body._id)
+    if (!group.members.some( (obj: {_id: String}) => member._id.equals(obj._id))) {
+      return res.status(404).json({
+        message: "User is not in the group"
+      })
+    } else {
+    group.members.forEach((element: { _id: any; }) => {
+      if(member._id.equals(element._id)) {
+        groupSchema.updateOne({ _id: groupId }, { $pull: {members: element}})
+          .exec()
+          .then((result) => {
+              res.status(200).json({
+              message: 'User deleted',
+              result
+            })
+          })
+          .catch(err => {
+            console.log(err)
+            res.status(500).json({
+              error: err
+            })
+          })
       }
-    }
-    res.status(404).json({
-      message: 'User not found'
     })
+  }
   } catch(err) {
     console.log(err)
     res.status(500).json({

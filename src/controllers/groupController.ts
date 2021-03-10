@@ -84,7 +84,13 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
 export const groupAddMember = async (req: Request, res: Response) => {
   const groupId = req.params.id
   try {
-    const member = await userSchema.findOne({email: req.body.email})
+    const member: any = await userSchema.findOne({email: req.body.email})
+    const group: any = await groupSchema.findById(groupId)
+    if (!group.members.find( (obj: { _id: any; }) => obj._id === member._id)) {
+      return res.status(404).json({
+        message: "User is already in the group"
+      })
+    } else {
     groupSchema.updateOne({ _id: groupId }, { $push: { members: member } })
       .exec()
       .then(result => {
@@ -99,10 +105,12 @@ export const groupAddMember = async (req: Request, res: Response) => {
           error: err
         })
       })
+    }
   } catch(err) {
     console.log(err)
     res.status(500).json({
       error: err
     })
   }
+
 }

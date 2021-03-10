@@ -150,3 +150,19 @@ export const groupDeleteMember = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const groupChangeName = async(req: Request, res: Response) => {
+  const groupId = req.params.groupId
+  try {
+    groupSchema.updateOne( {_id: groupId}, { $set: { groupName: req.body.newName}})
+      .exec()
+      .then(() => res.status(200).json({
+        message: 'groupName changed'
+      }))    
+  } catch(err) {
+    console.log(err)
+    res.status(500).json({
+      error: err
+    })
+  }
+}

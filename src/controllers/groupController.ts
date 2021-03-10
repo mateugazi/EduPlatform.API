@@ -113,3 +113,33 @@ export const groupAddMember = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const groupDeleteMember = (req: Request, res: Response) => {
+  const groupId = req.params.groupId
+  try {
+    const group: any = groupSchema.findById(groupId)
+    const member: any = userSchema.findById(req.body._id)
+    for(let i = 0; i < group.members.length; i++)
+    {
+      if(member._id.equals(group.members[i]._id)) {
+        group.members.update(
+          {},
+          { $pull: {_id: group.members[i]._id}},
+          { multi: false }
+        )
+        return res.status(200).json({
+          message: 'User deleted',
+          newGroup: group
+        })
+      }
+    }
+    res.status(404).json({
+      message: 'User not found'
+    })
+  } catch(err) {
+    console.log(err)
+    res.status(500).json({
+      error: err
+    })
+  }
+}

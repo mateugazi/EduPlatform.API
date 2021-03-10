@@ -86,7 +86,7 @@ export const groupAddMember = async (req: Request, res: Response) => {
   try {
     const member: any = await userSchema.findOne({email: req.body.email})
     const group: any = await groupSchema.findById(groupId)
-    if (!group.members.find( (obj: { _id: any; }) => obj._id === member._id)) {
+    if (group.members.some( (obj: {_id: String}) => member._id.equals(obj._id))) {
       return res.status(404).json({
         message: "User is already in the group"
       })

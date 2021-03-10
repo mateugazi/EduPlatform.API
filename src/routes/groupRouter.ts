@@ -6,6 +6,6 @@ const groupRouter = express.Router();
 groupRouter.post('/createGroup', groupCreateGroup);
 groupRouter.get('/', groupGetAllGroup)
 groupRouter.get('/:groupId', groupGetSingleGroup)
-groupRouter.put('/addMember/:id', groupAddMember)
+groupRouter.put('/addMember/:groupId', groupAddMember)
 
 export default groupRouter;

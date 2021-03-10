@@ -82,7 +82,7 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
 }
 
 export const groupAddMember = async (req: Request, res: Response) => {
-  const groupId = req.params.id
+  const groupId = req.params.groupId
   try {
     const member: any = await userSchema.findOne({email: req.body.email})
     const group: any = await groupSchema.findById(groupId)
@@ -112,5 +112,4 @@ export const groupAddMember = async (req: Request, res: Response) => {
       error: err
     })
   }
-
 }

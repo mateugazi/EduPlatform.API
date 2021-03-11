@@ -112,7 +112,9 @@ Create new project.
 | Link to demo   | String |
 | Link to GitHub | String |
 
-#### Example Request body
+#### Example Request
+
+**POST** /projects
 
 ```
 {
@@ -151,7 +153,7 @@ Update informations about project using project id.
 
 ### Example Request and Request body
 
-**GET** /projects/60428ed89187ba2c9807e148
+**PUT** /projects/60428ed89187ba2c9807e148
 
 ```
 {
@@ -177,3 +179,7 @@ Delete single project using project id.
 | Name      | Type   |
 | --------- | ------ |
 | ProjectId | String |
+
+#### Example Request
+
+**DELETE** /projects/60428ed89187ba2c9807e148

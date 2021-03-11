@@ -67,7 +67,9 @@ exports.projects_add_new_project = (req: Request, res: Response) => {
 
 exports.projects_update_project = (req: Request, res: Response) => {
     Types.ObjectId.isValid(req.params.projectId) ? null : res.status(400).send('Id is not valid')
-    const authors = req.params.authors
+    
+    if (!req.body.title || !req.body.description || !req.body.mentor || !req.body.authors || !req.body.linkToDemo || !req.body.linkToGitHub) res.status(400).send('Missing parameter')
+
     const projectData = {
         title: req.body.title,
         description: req.body.description,

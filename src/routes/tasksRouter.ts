@@ -1,5 +1,5 @@
 import express from 'express';
-import { AllTasks, TaskById, AddTask, UpdateTask, DeleteTask, TasksByProject, TasksByUser} from '../controllers/tasksController';
+import { AllTasks, TaskById, AddTask, UpdateTask, DeleteTask, TasksByProject} from '../controllers/tasksController';
 
 const tasksRouter = express.Router();
 
@@ -8,8 +8,6 @@ tasksRouter.get('/', AllTasks)
 tasksRouter.get('/:id', TaskById)
 
 tasksRouter.get('/project/:id', TasksByProject)
-
-tasksRouter.get('/user/:id', TasksByUser)
 
 tasksRouter.post('/', AddTask)
 

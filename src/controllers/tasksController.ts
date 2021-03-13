@@ -37,35 +37,35 @@ export const TasksByProject = async (req:Request, res:Response) => {
     
 }
 
-export const TasksByUser = async (req:Request, res:Response) => {
+// export const TasksByUser = async (req:Request, res:Response) => {
 
-    if(!Types.ObjectId.isValid(req.params.id)) {
-        return res.status(400).send('User Id is not valid');
-    }
+//     if(!Types.ObjectId.isValid(req.params.id)) {
+//         return res.status(400).send('User Id is not valid');
+//     }
 
-    const tasksByUser = await Task.find({"user._id": req.params.id});
+//     const tasksByUser = await Task.find({"user._id": req.params.id});
 
-    if (tasksByUser.length > 0) {
-        return res.send(tasksByUser)
-    } 
-    res.status(404).send('Tasks not found')
-}
+//     if (tasksByUser.length > 0) {
+//         return res.send(tasksByUser)
+//     } 
+//     res.status(404).send('Tasks not found')
+// }
 
-export const TasksByUserAndProject = async (req: Request, res: Response) => {
-    if (!Types.ObjectId.isValid(req.params.projectId)) {
-        return res.status(400).send('Project Id is not valid');
-    } 
-    if (!Types.ObjectId.isValid(req.params.userId)) {
-        return res.status(400).send('Project Id is not valid');
-    }
+// export const TasksByUserAndProject = async (req: Request, res: Response) => {
+//     if (!Types.ObjectId.isValid(req.params.projectId)) {
+//         return res.status(400).send('Project Id is not valid');
+//     } 
+//     if (!Types.ObjectId.isValid(req.params.userId)) {
+//         return res.status(400).send('Project Id is not valid');
+//     }
 
-    const tasksByUserAndProject = await Task.find({"user._id": req.params.id, "project._id": req.params.id});
+//     const tasksByUserAndProject = await Task.find({"user._id": req.params.id, "project._id": req.params.id});
 
-    if (tasksByUserAndProject.length > 0) {
-        return res.send(tasksByUserAndProject)
-    }
-    res.status(404).send('Tasks not found')
-}
+//     if (tasksByUserAndProject.length > 0) {
+//         return res.send(tasksByUserAndProject)
+//     }
+//     res.status(404).send('Tasks not found')
+// }
 
 export const AddTask = async (req:Request, res:Response) => {
 
@@ -90,6 +90,7 @@ export const AddTask = async (req:Request, res:Response) => {
                 _id: projectData._id,
                 title: projectData.title,
                 description: projectData.description,
+                mentor: projectData.mentor,
                 authors: projectData.authors,
                 linkToDemo: projectData.linkToDemo,
                 linkToGitHub: projectData.linkToGitHub,

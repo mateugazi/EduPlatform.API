@@ -3,12 +3,12 @@ import {Task} from '../../src/models/tasksSchema';
 import Project from '../../src/models/projectSchema';
 import tasksRouter from '../../src/routes/tasksRouter';
 import express from 'express';
-import bodyParser from 'body-parser';
+import {json, urlencoded} from 'body-parser';
 const supertest = require('supertest');
 
 const app = express();
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(json())
+app.use(urlencoded({ extended: false }));
 app.use("/", tasksRouter);
 
 const request = supertest(app);
@@ -26,6 +26,7 @@ const newProject = {
     _id: new mongoose.Types.ObjectId(),
     title: "First project",
     description: "First firs",
+    mentor: "Mentor",
     authors: ["First", "Second"],
     linkToDemo: null,
     linkToGitHub: 'testtest',

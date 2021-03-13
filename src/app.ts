@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import sampleRouter from './routes/sampleRouter';
 import groupRouter from './routes/groupRouter'
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocument from '../public/swagger.json'
 
 const app = express();
 
@@ -33,6 +35,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   }
   next();
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use('/sample', sampleRouter);
 app.use('/group', groupRouter)

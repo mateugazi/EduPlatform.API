@@ -1,5 +1,6 @@
 import {model, Schema, Document, Types} from 'mongoose';
 import {projectSchema} from './projectSchema';
+import {userSchema} from './userSchema';
 
 export interface ITask extends Document{
     _id: Types.ObjectId,
@@ -32,9 +33,9 @@ export const taskSchema = new Schema<ITask>( {
         type: Boolean,
         required: true
     },
-    // user: {
-    //     type: userSchema,
-    // },
+    user: {
+        type: userSchema,
+    },
     project: {
         type: projectSchema
     }

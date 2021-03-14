@@ -12,7 +12,7 @@ export interface projectInterface extends mongoose.Document {
     timestamp: number
 }
 
-const projectSchema = new mongoose.Schema<projectInterface>({
+export const projectSchema = new mongoose.Schema<projectInterface>({
     _id: mongoose.Schema.Types.ObjectId,
     title: {
         type: String,

@@ -130,6 +130,16 @@ Create new project.
 }
 ```
 
+#### Example Response
+
+```
+Status: 201 Created
+
+{
+    "message": "Project added successfully!"
+}
+```
+
 ### PUT `/projects/{projectId}`
 
 Update informations about project using project id.
@@ -170,6 +180,16 @@ Update informations about project using project id.
 }
 ```
 
+#### Example Response
+
+```
+Status: 200 OK
+
+{
+    "message": "Updated successfully!"
+}
+```
+
 ### DELETE `/projects/{projectId}`
 
 Delete single project using project id.
@@ -183,3 +203,12 @@ Delete single project using project id.
 #### Example Request
 
 **DELETE** /projects/60428ed89187ba2c9807e148
+
+#### Example Response
+
+```
+Status: 200 OK
+{
+    "message": "Deleted successfully"
+}
+```

@@ -146,8 +146,32 @@
                }
             ],
             "responses": {
-               "200": {
-                  "description": "Group created"
+               "201": {
+                  "description": "Group created",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "Group created"
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "This group name is already taken",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "This group name is already taken"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error"
                }
             }
          }

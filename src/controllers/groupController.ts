@@ -22,10 +22,7 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
           .then(result => {
             console.log(result)
             res.status(201).json({
-              message: "Group created",
-              createdGroup: {
-                group
-              }
+              message: "Group created"
             })
           })
         .catch(err => {

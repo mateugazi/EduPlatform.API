@@ -21,7 +21,47 @@
             "summary": "Get all the groups",
             "responses": {
                "200": {
-                  "description": "Object with all groups."
+                  "description": "Object with all groups.",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "numberOfGroups": {
+                           "type": "integer",
+                           "example": 1
+                        },
+                        "result": {
+                           "type": "array",
+                           "items": {
+                              "type": "object",
+                              "properties": {
+                                 "_id": {
+                                    "type": "string"
+                                 },
+                                 "groupName": {
+                                    "type": "string"
+                                 },
+                                 "mentor": {
+                                    "type": "string"
+                                 },
+                                 "members": {
+                                    "type": "array",
+                                    "items": {
+                                       "type": "object",
+                                       "properties": {
+                                          "_id": {
+                                             "type": "string"
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error"
                }
             }
          }

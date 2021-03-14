@@ -166,3 +166,21 @@ export const groupChangeName = async(req: Request, res: Response) => {
     })
   }
 }
+
+export const groupDeleteGroup = (req: Request, res: Response) => {
+  const groupId = req.params.groupId
+  
+    groupSchema.deleteOne({ _id: groupId})
+    .exec()
+    .then(result => res.status(200).json({
+      message: 'Group deleted',
+      result
+    }))
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
+  
+}

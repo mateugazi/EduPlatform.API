@@ -5,7 +5,8 @@ import {
     groupGetAllGroup, 
     groupAddMember, 
     groupDeleteMember,
-    groupChangeName
+    groupChangeName,
+    groupDeleteGroup
 } from '../controllers/groupController';
 
 const groupRouter = express.Router();
@@ -16,5 +17,6 @@ groupRouter.get('/:groupId', groupGetSingleGroup)
 groupRouter.put('/addMember/:groupId', groupAddMember)
 groupRouter.put('/deleteMember/:groupId', groupDeleteMember)
 groupRouter.put('/changeName/:groupId', groupChangeName)
+groupRouter.delete('/deleteGroup/:groupId', groupDeleteGroup)
 
 export default groupRouter;

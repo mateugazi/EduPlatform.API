@@ -7,6 +7,7 @@ import sampleRouter from './routes/sampleRouter';
 import groupRouter from './routes/groupRouter'
 import swaggerUi from 'swagger-ui-express'
 import swaggerDocument from '../public/swagger.json'
+import swaggerFile from '../swagger_output.json'
 
 const app = express();
 
@@ -35,8 +36,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   }
   next();
 });
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use('/sample', sampleRouter);
 app.use('/group', groupRouter)

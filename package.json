@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "nodemon index.ts",
     "test": "jest",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "swagger": "node swagger.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
+    "swagger-autogen": "^2.7.1",
     "swagger-ui": "^3.45.0",
     "swagger-ui-express": "^4.1.6"
   },

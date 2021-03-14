@@ -43,6 +43,11 @@ paths:
                             type: string
         '500':
           description: Internal server error
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
   /group/{groupId}:
     get:
       summary: Get a single group
@@ -77,6 +82,11 @@ paths:
                             type: string
         '500':
           description: Internal server error
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
   /group/createGroup:
     post:
       summary: Create a group
@@ -113,6 +123,11 @@ paths:
                 example: This group name is already taken
         '500':
           description: Internal server error
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
   /group/addMember/{groupId}:
     put:
       summary: Add a member to the group
@@ -127,13 +142,37 @@ paths:
           schema:
             type: object
             required:
-              - email
+              - _id
             properties:
-              email:
+              _id:
                 type: string
+                description: User's id
       responses:
         '200':
           description: User added
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: User added
+              member:
+                type: object
+        '404':
+          description: User is already in the group
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: User is already in the group
+        '500':
+          description: Internal server error
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
   /group/deleteMember/{groupId}:
     put:
       summary: Delete a member from the group
@@ -155,6 +194,29 @@ paths:
       responses:
         '200':
           description: User deleted from the group
+          schema: 
+            type: object
+            properties:
+              message: 
+                type: string
+                example: User deleted
+              result:
+                type: object
+        '404':
+          description: User is not in the group
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: User is not in the group
+        '500':
+          description: Internal server error
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
   /group/changeName/{groupId}:
     put:
       summary: Change a group name
@@ -175,9 +237,43 @@ paths:
                 type: string
       responses:
         '200':
-          description: Ok
+          description: Group's name changed
           schema:
             type: object
             properties:
               message:
                 type: string
+                example: Group's name changed
+        '500':
+          description: Internal server error
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+  /group/deleteGroup/{groupId}:
+    delete:
+      summary: Delete a group
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Groupd deleted
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Group deleted
+              result:
+                type: object
+        '500':
+          description: Internal server error
+          schema:
+            type: object
+            properties:
+              error:
+                type: object

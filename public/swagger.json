@@ -61,7 +61,15 @@
                   }
                },
                "500": {
-                  "description": "Internal server error"
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
                }
             }
          }
@@ -115,7 +123,15 @@
                   }
                },
                "500": {
-                  "description": "Internal server error"
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
                }
             }
          }
@@ -171,7 +187,15 @@
                   }
                },
                "500": {
-                  "description": "Internal server error"
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
                }
             }
          }
@@ -193,11 +217,12 @@
                   "schema": {
                      "type": "object",
                      "required": [
-                        "email"
+                        "_id"
                      ],
                      "properties": {
-                        "email": {
-                           "type": "string"
+                        "_id": {
+                           "type": "string",
+                           "description": "User's id"
                         }
                      }
                   }
@@ -205,7 +230,42 @@
             ],
             "responses": {
                "200": {
-                  "description": "User added"
+                  "description": "User added",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "User added"
+                        },
+                        "member": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "User is already in the group",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "User is already in the group"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
                }
             }
          }
@@ -239,7 +299,42 @@
             ],
             "responses": {
                "200": {
-                  "description": "User deleted from the group"
+                  "description": "User deleted from the group",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "User deleted"
+                        },
+                        "result": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "User is not in the group",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "User is not in the group"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
                }
             }
          }
@@ -273,12 +368,65 @@
             ],
             "responses": {
                "200": {
-                  "description": "Ok",
+                  "description": "Group's name changed",
                   "schema": {
                      "type": "object",
                      "properties": {
                         "message": {
-                           "type": "string"
+                           "type": "string",
+                           "example": "Group's name changed"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/group/deleteGroup/{groupId}": {
+         "delete": {
+            "summary": "Delete a group",
+            "parameters": [
+               {
+                  "name": "groupId",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Groupd deleted",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "Group deleted"
+                        },
+                        "result": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
                         }
                      }
                   }

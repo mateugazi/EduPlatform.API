@@ -81,7 +81,7 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
 export const groupAddMember = async (req: Request, res: Response) => {
   const groupId = req.params.groupId
   try {
-    const member: any = await userSchema.findOne({email: req.body.email})
+    const member: any = await userSchema.findById(req.body._id)
     const group: any = await groupSchema.findById(groupId)
     if (group.members.some( (obj: {_id: String}) => member._id.equals(obj._id))) {
       return res.status(404).json({
@@ -154,7 +154,7 @@ export const groupChangeName = async(req: Request, res: Response) => {
     groupSchema.updateOne( {_id: groupId}, { $set: { groupName: req.body.newName}})
       .exec()
       .then(() => res.status(200).json({
-        message: 'groupName changed'
+        message: `Groups's name changed`
       }))    
   } catch(err) {
     console.log(err)

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import {Task} from '../../src/models/tasksSchema';
 import Project from '../../src/models/projectSchema';
-import User from '../../src/models/authorizationSchema';
+// import User from '../../src/models/authorizationSchema';
 import tasksRouter from '../../src/routes/tasksRouter';
 import express from 'express';
 import {json, urlencoded} from 'body-parser';
@@ -64,8 +64,8 @@ describe('/tasks', () => {
     
     afterEach(async () => {
         await Task.deleteMany()
-        await Project.deleteMany(),
-        await User.deleteMany()
+        await Project.deleteMany()
+        // await User.deleteMany()
       })
 
     describe('create user successfully', () => {
@@ -171,49 +171,49 @@ describe('/tasks', () => {
         })
     });
 
-    describe ('GET /user/:id', () => {
+    // describe ('GET /user/:id', () => {
 
-        it('with correct User Id', async done => {
-            const user = new User(newUser)
-            await user.save();
-            await request.post('/').send({...newTask, userId: user._id})
-            const response = await request.get('/user/' + user._id);
-            expect(response.status).toEqual(200);
-            expect(response.body.length).toEqual(1);
-            expect(response.body[0].name).toBe(newTask.name);
-            expect(response.body[0].description).toBe(newTask.description);
-            expect(response.body[0].deadline).toBe(newTask.deadline);
-            expect(response.body[0].done).toBe(newTask.done);
-            expect(response.body[0].user.firstName).toBe(newUser.firstName);
-            expect(response.body[0].user.lastName).toBe(newUser.lastName);
-            expect(response.body[0].user.email).toBe(newUser.email);
-            expect(response.body[0].user.role).toBe(newUser.role);
-            done()
-        });
+    //     it('with correct User Id', async done => {
+    //         const user = new User(newUser)
+    //         await user.save();
+    //         await request.post('/').send({...newTask, userId: user._id})
+    //         const response = await request.get('/user/' + user._id);
+    //         expect(response.status).toEqual(200);
+    //         expect(response.body.length).toEqual(1);
+    //         expect(response.body[0].name).toBe(newTask.name);
+    //         expect(response.body[0].description).toBe(newTask.description);
+    //         expect(response.body[0].deadline).toBe(newTask.deadline);
+    //         expect(response.body[0].done).toBe(newTask.done);
+    //         expect(response.body[0].user.firstName).toBe(newUser.firstName);
+    //         expect(response.body[0].user.lastName).toBe(newUser.lastName);
+    //         expect(response.body[0].user.email).toBe(newUser.email);
+    //         expect(response.body[0].user.role).toBe(newUser.role);
+    //         done()
+    //     });
 
-        it('with lack of task for user ID', async done => {
-            const user = new User(newUser)
-            await user.save();
-            const response = await request.get('/user/' + user._id);
-            expect(response.status).toEqual(404);
-            expect(response.text).toEqual('Tasks not found or incorrect if for user');
-            done()
-        });
+    //     it('with lack of task for user ID', async done => {
+    //         const user = new User(newUser)
+    //         await user.save();
+    //         const response = await request.get('/user/' + user._id);
+    //         expect(response.status).toEqual(404);
+    //         expect(response.text).toEqual('Tasks not found or incorrect if for user');
+    //         done()
+    //     });
 
-        it('with no User Id in database', async done => {
-            const response = await request.get('/user/6043cf5f980add1944946acc');
-            expect(response.status).toEqual(404);
-            expect(response.text).toEqual('Tasks not found or incorrect if for user');
-            done()
-        })
+    //     it('with no User Id in database', async done => {
+    //         const response = await request.get('/user/6043cf5f980add1944946acc');
+    //         expect(response.status).toEqual(404);
+    //         expect(response.text).toEqual('Tasks not found or incorrect if for user');
+    //         done()
+    //     })
 
-        it('with incorrect User Id', async done => {
-            const response = await request.get('/user/6043cf');
-            expect(response.status).toEqual(400);
-            expect(response.text).toEqual('User Id is not valid');
-            done()
-        })
-    })
+    //     it('with incorrect User Id', async done => {
+    //         const response = await request.get('/user/6043cf');
+    //         expect(response.status).toEqual(400);
+    //         expect(response.text).toEqual('User Id is not valid');
+    //         done()
+    //     })
+    // })
 
     describe ('DELETE /:id', () => {
         

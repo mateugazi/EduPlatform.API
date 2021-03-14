@@ -1,14 +1,11 @@
 import {model, Schema, Document, Types} from 'mongoose';
-import {projectSchema} from './projectSchema';
-import {userSchema} from './authorizationSchema';
 
 export interface ITask extends Document{
     _id: Types.ObjectId,
     name: string,
     description: string,
     deadline: number,
-    done: boolean,
-    project?: Schema
+    done: boolean
 }
 
 export const taskSchema = new Schema<ITask>( {
@@ -32,12 +29,6 @@ export const taskSchema = new Schema<ITask>( {
     done: {
         type: Boolean,
         required: true
-    },
-    user: {
-        type: userSchema,
-    },
-    project: {
-        type: projectSchema
     }
 });
 

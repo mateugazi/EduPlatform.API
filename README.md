@@ -60,29 +60,17 @@ Get all tasks
 Get single task using it ID.
 
 #### Example response
-**GET** /tasks/603a99506195bd2ccc8e8db6
+**GET** /tasks/603962e3f87efb51b0907762
 
 ```
 Status: 200 OK
 
 {
-    "_id": "603a99506195bd2ccc8e8db6",
+     "_id": "603962e3f87efb51b0907762",
     "name": "Lorem lorem lorem lorem",
     "description": "Lorem lorem lorem lorem",
     "deadline": 1614366265,
     "done": false,
-    "project": {
-        "authors": [
-            "Ania",
-            "Maja"
-        ],
-        "_id": "603509b488103d2df0106cbb",
-        "title": "New project",
-        "description": "This is our first project",
-        "linkToDemo": "www.project.pl",
-        "linkToGitHub": "www.github.pl/project",
-        "timestamp": 1614088628772
-    },
     "__v": 0
 },
 ```
@@ -152,6 +140,7 @@ Create new task. It is possible to add information to task for project by adding
 | Deadline       | Number        |
 | Done           | Boolean       |
 | ProjectId      | String        |
+| UserId         | String        |
 
 #### Example response 
 **POST** /tasks

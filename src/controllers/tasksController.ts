@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import {Types} from 'mongoose';
 import {Task} from '../models/tasksSchema';
-import Project from '../models/projectSchema';
-import User from '../models/authorizationSchema';
+// import Project from '../models/projectSchema';
+// import User from '../models/authorizationSchema';
 
 export const AllTasks =  async (req:Request, res:Response) => {
     const tasksList = await Task.find();
@@ -19,7 +19,7 @@ export const TaskById = async (req:Request, res:Response) => {
     if (!task) {
         return res.status(404).send('Task not found')
     } 
-    res.send(task._id) 
+    res.send(task) 
 }
 
 export const TasksByProject = async (req:Request, res:Response) => {
@@ -69,121 +69,24 @@ export const TasksByUserAndProject = async (req: Request, res: Response) => {
 }
 
 export const AddTask = async (req:Request, res:Response) => {
-
-    let task;
-    if (req.body.userId && req.body.projectId) {
-        if(!Types.ObjectId.isValid(req.body.userId)) {
-            return res.status(400).send('User Id is invalid')
-        }
-        if(!Types.ObjectId.isValid(req.body.projectId)) {
-            return res.status(400).send('Project Id is invalid')
-        }
-
-        const userData = await User.findById(req.body.userId);
-        const projectData = await Project.findById(req.body.projectId);
-
-        if (!userData) {
-            return res.status(404).send('User not found')
-        }
-        if (!projectData) {
-            return res.status(404).send('Project not found')
-        }
-
-        task = new Task({
+  
+    try {
+        let task = new Task({
             _id: new Types.ObjectId(),
             name: req.body.name,
             description: req.body.description,
             deadline: req.body.deadline,
             done: false,
-            user: {
-                _id: userData._id,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                email: userData.email,
-                password: userData.password,
-                login: userData.login,
-                role: userData.role,
-            },
-            project: {
-                _id: projectData._id,
-                title: projectData.title,
-                description: projectData.description,
-                mentor: projectData.mentor,
-                authors: projectData.authors,
-                linkToDemo: projectData.linkToDemo,
-                linkToGitHub: projectData.linkToGitHub,
-                timestamp: projectData.timestamp
-            }
         })
 
-
+        task = await task.save();
+        res.send(task);
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        })
     }
-    if (req.body.userId) {
-        if(!Types.ObjectId.isValid(req.body.userId)) {
-            return res.status(400).send('User Id is invalid')
-        }
-        const userData = await User.findById(req.body.userId);
-
-        if (!userData) {
-            return res.status(404).send('User not found')
-        }
-
-        task = new Task({
-            _id: new Types.ObjectId(),
-            name: req.body.name,
-            description: req.body.description,
-            deadline: req.body.deadline,
-            done: false,
-            user: {
-                _id: userData._id,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                email: userData.email,
-                password: userData.password,
-                login: userData.login,
-                role: userData.role,
-            }
-        })
-    } else if (req.body.projectId) {
-        if(!Types.ObjectId.isValid(req.body.projectId)) {
-            return res.status(400).send('Project Id is invalid')
-        }
-        const projectData = await Project.findById(req.body.projectId);
-
-        if (!projectData) {
-            return res.status(404).send('Project not found')
-        }
-
-        task = new Task({
-            _id: new Types.ObjectId(),
-            name: req.body.name,
-            description: req.body.description,
-            deadline: req.body.deadline,
-            done: false,
-            project: {
-                _id: projectData._id,
-                title: projectData.title,
-                description: projectData.description,
-                mentor: projectData.mentor,
-                authors: projectData.authors,
-                linkToDemo: projectData.linkToDemo,
-                linkToGitHub: projectData.linkToGitHub,
-                timestamp: projectData.timestamp
-            }
-        })
-    } else {
-        task = new Task({
-            _id: new Types.ObjectId(),
-            name: req.body.name,
-            description: req.body.description,
-            deadline: req.body.deadline,
-            done: false,
-    })
-    }
- 
-    task = await task.save();
-    
-    res.send(task);
+  
 
 }
 

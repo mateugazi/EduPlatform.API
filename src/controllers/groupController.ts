@@ -19,13 +19,13 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
           mentor: userMentor
         })
         group.save()
-          .then(result => {
+          .then((result: any) => {
             console.log(result)
             res.status(201).json({
               message: "Group created"
             })
           })
-        .catch(err => {
+        .catch((err: any) => {
           console.log(err)
           res.status(500).json({
             error: err
@@ -43,13 +43,13 @@ export const groupGetAllGroup = (req: Request, res: Response) => {
     groupSchema.find()
     .select('_id groupName mentor members')
     .exec()
-    .then(result => {
+    .then((result: string | any[]) => {
       res.status(200).json({
         numberOfGroups: result.length,
         result
       })
     })
-    .catch(err => {
+    .catch((err: any) => {
       res.status(500).json({
         error: err
       })
@@ -61,7 +61,7 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
   groupSchema.findById(id)
     .select('_id groupName mentor members')
     .exec()
-    .then(result => {
+    .then((result: any) => {
       if (!result) {
         return res.status(404).json({
           message: 'Group not found'
@@ -71,7 +71,7 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
         group: result
       })
     })
-    .catch(err => {
+    .catch((err: any) => {
       res.status(500).json({
         error: err
       })
@@ -90,13 +90,13 @@ export const groupAddMember = async (req: Request, res: Response) => {
     } else {
     groupSchema.updateOne({ _id: groupId }, { $push: { members: member } })
       .exec()
-      .then(result => {
+      .then((result: any) => {
         res.status(200).json({
           message: 'User added',
           member
         })
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.log(err)
         res.status(500).json({
           error: err
@@ -125,13 +125,13 @@ export const groupDeleteMember = async (req: Request, res: Response) => {
       if(member._id.equals(element._id)) {
         groupSchema.updateOne({ _id: groupId }, { $pull: {members: element}})
           .exec()
-          .then((result) => {
+          .then((result: any) => {
               res.status(200).json({
               message: 'User deleted',
               result
             })
           })
-          .catch(err => {
+          .catch((err: any) => {
             console.log(err)
             res.status(500).json({
               error: err
@@ -169,11 +169,11 @@ export const groupDeleteGroup = (req: Request, res: Response) => {
   
     groupSchema.deleteOne({ _id: groupId})
     .exec()
-    .then(result => res.status(200).json({
+    .then((result: any) => res.status(200).json({
       message: 'Group deleted',
       result
     }))
-    .catch(err => {
+    .catch((err: any) => {
       console.log(err)
       res.status(500).json({
         error: err

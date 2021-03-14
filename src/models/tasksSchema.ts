@@ -1,6 +1,6 @@
 import {model, Schema, Document, Types} from 'mongoose';
 import {projectSchema} from './projectSchema';
-import {userSchema} from './userSchema';
+import {userSchema} from './authorizationSchema';
 
 export interface ITask extends Document{
     _id: Types.ObjectId,

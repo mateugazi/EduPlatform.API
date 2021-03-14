@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import {Task} from '../../src/models/tasksSchema';
 import Project from '../../src/models/projectSchema';
-import User from '../../src/models/userSchema';
+import User from '../../src/models/authorizationSchema';
 import tasksRouter from '../../src/routes/tasksRouter';
 import express from 'express';
 import {json, urlencoded} from 'body-parser';
@@ -23,25 +23,35 @@ const newTask = {
     projectId: ''
 }
 
-const newProject = {
+const newMentor = {
     _id: new mongoose.Types.ObjectId(),
-    title: "First project",
-    description: "First firs",
-    mentor: "Mentor",
-    authors: ["First", "Second"],
-    linkToDemo: null,
-    linkToGitHub: 'testtest',
-    timestamp: 1615923590
-}
-
-const newUser = {
-    id: new mongoose.Types.ObjectId(),
     firstName: 'A',
     lastName: 'B',
     email: 'abc@abc.abc',
     password: 'abcdefghij',
     login: 'abc',
     role: 'mentor'
+}
+
+const newUser = {
+    _id: new mongoose.Types.ObjectId(),
+    firstName: 'C',
+    lastName: 'D',
+    email: 'def@def.def',
+    password: 'abcdefghij',
+    login: 'def',
+    role: "participant"
+}
+
+const newProject = {
+    _id: new mongoose.Types.ObjectId(),
+    title: "First project",
+    description: "First firs",
+    mentor: newMentor._id,
+    authors: [newUser._id],
+    linkToDemo: null,
+    linkToGitHub: 'testtest',
+    timestamp: 1615923590
 }
 
 const databaseName= 'taskTest';
@@ -54,7 +64,8 @@ describe('/tasks', () => {
     
     afterEach(async () => {
         await Task.deleteMany()
-        await Project.deleteMany()
+        await Project.deleteMany(),
+        await User.deleteMany()
       })
 
     describe('create user successfully', () => {
@@ -132,6 +143,7 @@ describe('/tasks', () => {
             expect(response.body[0].description).toBe(newTask.description);
             expect(response.body[0].deadline).toBe(newTask.deadline);
             expect(response.body[0].done).toBe(newTask.done);
+            expect(response.body[0].project.title).toBe(newProject.title)
             done()
         });
 
@@ -164,14 +176,18 @@ describe('/tasks', () => {
         it('with correct User Id', async done => {
             const user = new User(newUser)
             await user.save();
-            await request.post('/').send({...newUser, userId: user._id})
+            await request.post('/').send({...newTask, userId: user._id})
             const response = await request.get('/user/' + user._id);
             expect(response.status).toEqual(200);
             expect(response.body.length).toEqual(1);
-            expect(response.body[0].firstName).toBe(newUser.firstName);
-            expect(response.body[0].lastName).toBe(newUser.lastName);
-            expect(response.body[0].email).toBe(newUser.email);
-            expect(response.body[0].role).toBe(newUser.role);
+            expect(response.body[0].name).toBe(newTask.name);
+            expect(response.body[0].description).toBe(newTask.description);
+            expect(response.body[0].deadline).toBe(newTask.deadline);
+            expect(response.body[0].done).toBe(newTask.done);
+            expect(response.body[0].user.firstName).toBe(newUser.firstName);
+            expect(response.body[0].user.lastName).toBe(newUser.lastName);
+            expect(response.body[0].user.email).toBe(newUser.email);
+            expect(response.body[0].user.role).toBe(newUser.role);
             done()
         });
 

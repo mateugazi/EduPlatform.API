@@ -18,18 +18,167 @@
    "paths": {
       "/group": {
          "get": {
-            "description": "Get all the groups",
             "summary": "Get all the groups",
             "responses": {
                "200": {
-                  "description": "All groups",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "type": "Object",
-                           "items": {
-                              "type": "Object"
-                           }
+                  "description": "Object with all groups."
+               }
+            }
+         }
+      },
+      "/group/{groupId}": {
+         "get": {
+            "summary": "Get a single group",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "groupId",
+                  "required": true,
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok"
+               }
+            }
+         }
+      },
+      "/group/createGroup": {
+         "post": {
+            "summary": "Create a group",
+            "parameters": [
+               {
+                  "name": "groupBody",
+                  "in": "body",
+                  "description": "Object with mentor's _id and groupName",
+                  "schema": {
+                     "type": "object",
+                     "required": [
+                        "mentor",
+                        "groupName"
+                     ],
+                     "properties": {
+                        "mentor": {
+                           "type": "string"
+                        },
+                        "groupName": {
+                           "type": "string"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Group created"
+               }
+            }
+         }
+      },
+      "/group/addMember/{groupId}": {
+         "put": {
+            "summary": "Add a member to the group",
+            "parameters": [
+               {
+                  "name": "groupId",
+                  "in": "path",
+                  "type": "string",
+                  "required": true
+               },
+               {
+                  "name": "userBody",
+                  "in": "body",
+                  "required": true,
+                  "schema": {
+                     "type": "object",
+                     "required": [
+                        "email"
+                     ],
+                     "properties": {
+                        "email": {
+                           "type": "string"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "User added"
+               }
+            }
+         }
+      },
+      "/group/deleteMember/{groupId}": {
+         "put": {
+            "summary": "Delete a member from the group",
+            "parameters": [
+               {
+                  "name": "groupId",
+                  "in": "path",
+                  "type": "string",
+                  "required": true
+               },
+               {
+                  "name": "userBody",
+                  "in": "body",
+                  "required": true,
+                  "schema": {
+                     "type": "object",
+                     "required": [
+                        "_id"
+                     ],
+                     "properties": {
+                        "_id": {
+                           "type": "string"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "User deleted from the group"
+               }
+            }
+         }
+      },
+      "/group/changeName/{groupId}": {
+         "put": {
+            "summary": "Change a group name",
+            "parameters": [
+               {
+                  "name": "groupId",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "nameBody",
+                  "in": "body",
+                  "required": true,
+                  "schema": {
+                     "type": "object",
+                     "required": [
+                        "newName"
+                     ],
+                     "properties": {
+                        "newName": {
+                           "type": "string"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string"
                         }
                      }
                   }

@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import sampleRouter from './routes/sampleRouter';
+import userRouter from './routes/authorizationRouter';
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use('/sample', sampleRouter);
+app.use('/authorization',userRouter);
 
 app.use('/', (req: Request, res: Response) => {
   res.status(404).json({

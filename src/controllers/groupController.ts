@@ -71,7 +71,7 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
         })
       }
       res.status(200).json({
-        result
+        group: result
       })
     })
     .catch(err => {

@@ -35,7 +35,43 @@
     "application/json"
   ],
   "paths": {
-    "/createGroup": {
+    "/sample/sampleRoute": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "value": {
+                  "type": "string",
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/group/createGroup": {
       "post": {
         "tags": [],
         "description": "",
@@ -59,6 +95,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Created"
           },
@@ -71,7 +110,7 @@
         }
       }
     },
-    "/": {
+    "/group/": {
       "get": {
         "tags": [],
         "description": "",
@@ -86,7 +125,7 @@
         }
       }
     },
-    "/{groupId}": {
+    "/group/{groupId}": {
       "get": {
         "tags": [],
         "description": "",
@@ -111,7 +150,7 @@
         }
       }
     },
-    "/addMember/{groupId}": {
+    "/group/addMember/{groupId}": {
       "put": {
         "tags": [],
         "description": "",
@@ -149,7 +188,7 @@
         }
       }
     },
-    "/deleteMember/{groupId}": {
+    "/group/deleteMember/{groupId}": {
       "put": {
         "tags": [],
         "description": "",
@@ -187,7 +226,7 @@
         }
       }
     },
-    "/changeName/{groupId}": {
+    "/group/changeName/{groupId}": {
       "put": {
         "tags": [],
         "description": "",
@@ -222,7 +261,7 @@
         }
       }
     },
-    "/deleteGroup/{groupId}": {
+    "/group/deleteGroup/{groupId}": {
       "delete": {
         "tags": [],
         "description": "",

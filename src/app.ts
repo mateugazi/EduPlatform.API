@@ -10,6 +10,7 @@ import swaggerDocument from '../public/swagger.json'
 import swaggerFile from '../swagger_output.json'
 import projectsRouter from './routes/projectsRouter';
 import tasksRouter from './routes/tasksRouter';
+import userRouter from './routes/authorizationRouter';
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use('/sample', sampleRouter);
 app.use('/group', groupRouter)
 app.use('/projects', projectsRouter);
 app.use('/tasks', tasksRouter)
+app.use('/authorization',userRouter);
 
 app.use('/', (req: Request, res: Response) => {
   res.status(404).json({

@@ -1,0 +1,438 @@
+{
+   "swagger": "2.0",
+   "info": {
+      "version": "1.0.0",
+      "title": "EduPlatform.API"
+   },
+   "host": "localhost:3000",
+   "basePath": "/",
+   "schemes": [
+      "http"
+   ],
+   "consumes": [
+      "application/json"
+   ],
+   "produces": [
+      "application/json"
+   ],
+   "paths": {
+      "/group": {
+         "get": {
+            "summary": "Get all the groups",
+            "responses": {
+               "200": {
+                  "description": "Object with all groups.",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "numberOfGroups": {
+                           "type": "integer",
+                           "example": 1
+                        },
+                        "result": {
+                           "type": "array",
+                           "items": {
+                              "type": "object",
+                              "properties": {
+                                 "_id": {
+                                    "type": "string"
+                                 },
+                                 "groupName": {
+                                    "type": "string"
+                                 },
+                                 "mentor": {
+                                    "type": "string"
+                                 },
+                                 "members": {
+                                    "type": "array",
+                                    "items": {
+                                       "type": "object",
+                                       "properties": {
+                                          "_id": {
+                                             "type": "string"
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/group/{groupId}": {
+         "get": {
+            "summary": "Get a single group",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "groupId",
+                  "required": true,
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Object with a single group",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "group": {
+                           "type": "array",
+                           "items": {
+                              "type": "object",
+                              "properties": {
+                                 "_id": {
+                                    "type": "string"
+                                 },
+                                 "groupName": {
+                                    "type": "string"
+                                 },
+                                 "mentor": {
+                                    "type": "string"
+                                 },
+                                 "members": {
+                                    "type": "array",
+                                    "items": {
+                                       "type": "object",
+                                       "properties": {
+                                          "_id": {
+                                             "type": "string"
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/group/createGroup": {
+         "post": {
+            "summary": "Create a group",
+            "parameters": [
+               {
+                  "name": "groupBody",
+                  "in": "body",
+                  "description": "Object with mentor's _id and groupName",
+                  "schema": {
+                     "type": "object",
+                     "required": [
+                        "mentor",
+                        "groupName"
+                     ],
+                     "properties": {
+                        "mentor": {
+                           "type": "string"
+                        },
+                        "groupName": {
+                           "type": "string"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Group created",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "Group created"
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "This group name is already taken",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "This group name is already taken"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/group/addMember/{groupId}": {
+         "put": {
+            "summary": "Add a member to the group",
+            "parameters": [
+               {
+                  "name": "groupId",
+                  "in": "path",
+                  "type": "string",
+                  "required": true
+               },
+               {
+                  "name": "userBody",
+                  "in": "body",
+                  "required": true,
+                  "schema": {
+                     "type": "object",
+                     "required": [
+                        "_id"
+                     ],
+                     "properties": {
+                        "_id": {
+                           "type": "string",
+                           "description": "User's id"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "User added",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "User added"
+                        },
+                        "member": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "User is already in the group",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "User is already in the group"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/group/deleteMember/{groupId}": {
+         "put": {
+            "summary": "Delete a member from the group",
+            "parameters": [
+               {
+                  "name": "groupId",
+                  "in": "path",
+                  "type": "string",
+                  "required": true
+               },
+               {
+                  "name": "userBody",
+                  "in": "body",
+                  "required": true,
+                  "schema": {
+                     "type": "object",
+                     "required": [
+                        "_id"
+                     ],
+                     "properties": {
+                        "_id": {
+                           "type": "string"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "User deleted from the group",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "User deleted"
+                        },
+                        "result": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "User is not in the group",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "User is not in the group"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/group/changeName/{groupId}": {
+         "put": {
+            "summary": "Change a group name",
+            "parameters": [
+               {
+                  "name": "groupId",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "nameBody",
+                  "in": "body",
+                  "required": true,
+                  "schema": {
+                     "type": "object",
+                     "required": [
+                        "newName"
+                     ],
+                     "properties": {
+                        "newName": {
+                           "type": "string"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Group's name changed",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "Group's name changed"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/group/deleteGroup/{groupId}": {
+         "delete": {
+            "summary": "Delete a group",
+            "parameters": [
+               {
+                  "name": "groupId",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Groupd deleted",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "message": {
+                           "type": "string",
+                           "example": "Group deleted"
+                        },
+                        "result": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                           "type": "object"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

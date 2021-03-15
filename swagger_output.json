@@ -92,57 +92,19 @@
         }
       }
     },
-    "/group/createGroup": {
-      "post": {
-        "tags": [
-          "Groups"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "mentor": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "groupName": {
-                  "type": "string",
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Created"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/group/": {
       "get": {
         "tags": [
           "Groups"
         ],
-        "description": "",
+        "description": "Endpoint to get all groups.",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/allGroups"
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -166,7 +128,68 @@
         ],
         "responses": {
           "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/group"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Group not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group/createGroup": {
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "newGroup",
+            "in": "body",
+            "description": "Create a new group",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/createGroup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
             "description": "OK"
+          },
+          "201": {
+            "description": "Created"
           },
           "404": {
             "description": "Not Found"
@@ -191,28 +214,61 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "_id",
             "in": "body",
+            "description": "Id of user",
+            "required": true,
+            "type": "object",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/addMember"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User added"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "User is in the group",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User is already in the group"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -231,28 +287,61 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "_id",
             "in": "body",
+            "description": "Id of user",
+            "required": true,
+            "type": "object",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/deleteMember"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User deleted"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User is not in the group"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -271,25 +360,46 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "newName",
             "in": "body",
+            "description": "New name of the group.",
+            "required": true,
+            "type": "object",
             "schema": {
-              "type": "object",
-              "properties": {
-                "newName": {
-                  "type": "string",
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/changeName"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "groupName changed"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -305,15 +415,40 @@
             "name": "groupId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id of the group"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Group deleted"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -920,5 +1055,129 @@
       }
     }
   },
-  "definitions": {}
+  "definitions": {
+    "group": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "604a7d278316be1be42ecab0"
+        },
+        "groupName": {
+          "type": "string",
+          "example": "sample group name"
+        },
+        "mentor": {
+          "type": "string",
+          "example": "604a7b12d610101287aa2955"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "604a7ba6d610101287aa2957"
+              }
+            }
+          }
+        }
+      }
+    },
+    "allGroups": {
+      "type": "object",
+      "properties": {
+        "numberOfGroups": {
+          "type": "number",
+          "example": 1
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "604a7d278316be1be42ecab0"
+              },
+              "groupName": {
+                "type": "string",
+                "example": "sample group name"
+              },
+              "mentor": {
+                "type": "string",
+                "example": "604a7b12d610101287aa2955"
+              },
+              "members": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "604a7ba6d610101287aa2957"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "createGroup": {
+      "type": "object",
+      "properties": {
+        "mentor": {
+          "type": "string",
+          "example": "604a7b12d610101287aa2955"
+        },
+        "groupName": {
+          "type": "string",
+          "example": "sample group name"
+        }
+      },
+      "required": [
+        "mentor",
+        "groupName"
+      ]
+    },
+    "addMember": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "604a7ba6d610101287aa2957"
+        }
+      },
+      "required": [
+        "_id"
+      ]
+    },
+    "deleteMember": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "604a7ba6d610101287aa2957"
+        }
+      },
+      "required": [
+        "_id"
+      ]
+    },
+    "changeName": {
+      "type": "object",
+      "properties": {
+        "newName": {
+          "type": "string",
+          "example": "new group name"
+        }
+      },
+      "required": [
+        "newName"
+      ]
+    }
+  }
 }

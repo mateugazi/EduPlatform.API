@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import {Task} from '../../src/models/tasksSchema';
 import Project from '../../src/models/projectSchema';
-// import User from '../../src/models/authorizationSchema';
+import User from '../../src/models/userSchema';
 import tasksRouter from '../../src/routes/tasksRouter';
 import express from 'express';
 import {json, urlencoded} from 'body-parser';
@@ -20,7 +20,8 @@ const newTask = {
     description: 'This is test task',
     deadline: 1615923590,
     done: false,
-    projectId: ''
+    projectId: '',
+    userId: ''
 }
 
 const newMentor = {
@@ -65,7 +66,7 @@ describe('/tasks', () => {
     afterEach(async () => {
         await Task.deleteMany()
         await Project.deleteMany()
-        // await User.deleteMany()
+        await User.deleteMany()
       })
 
     describe('create user successfully', () => {
@@ -109,14 +110,17 @@ describe('/tasks', () => {
             await task.save()
             const response = await request.get('/' + task._id);
             expect(response.status).toEqual(200);
-            expect(JSON.stringify(response.body)).toEqual(JSON.stringify(task._id));
+            expect(response.body.name).toBe(newTask.name);
+            expect(response.body.description).toBe(newTask.description);
+            expect(response.body.deadline).toBe(newTask.deadline);
+            expect(response.body.done).toBe(newTask.done);
             done()
         });
 
         it('throw error - task not found', async done => {
             const task = new Task(newTask);
             await task.save()
-            const response = await request.get('/6043cf5f980add1944946a23')
+            const response = await request.get('/6043cf5f981add1944946a23')
             expect(response.status).toEqual(404);
             expect(response.text).toEqual('Task not found');
             done()
@@ -136,6 +140,7 @@ describe('/tasks', () => {
             const project = new Project(newProject)
             await project.save();
             await request.post('/').send({...newTask, projectId: project._id})
+            console.log(project._id)
             const response = await request.get('/project/' + project._id);
             expect(response.status).toEqual(200);
             expect(response.body.length).toEqual(1);
@@ -143,7 +148,7 @@ describe('/tasks', () => {
             expect(response.body[0].description).toBe(newTask.description);
             expect(response.body[0].deadline).toBe(newTask.deadline);
             expect(response.body[0].done).toBe(newTask.done);
-            expect(response.body[0].project.title).toBe(newProject.title)
+            expect(response.body[0].project).toBe(newProject._id)
             done()
         });
 
@@ -157,7 +162,7 @@ describe('/tasks', () => {
         });
 
         it('with no Project Id in database', async done => {
-            const response = await request.get('/project/6043cf5f980add1944946acc');
+            const response = await request.get('/project/6043cf5f981add1944946acc');
             expect(response.status).toEqual(404);
             expect(response.text).toEqual('Tasks not found or incorrect id for project');
             done()
@@ -171,49 +176,46 @@ describe('/tasks', () => {
         })
     });
 
-    // describe ('GET /user/:id', () => {
+    describe ('GET /user/:id', () => {
 
-    //     it('with correct User Id', async done => {
-    //         const user = new User(newUser)
-    //         await user.save();
-    //         await request.post('/').send({...newTask, userId: user._id})
-    //         const response = await request.get('/user/' + user._id);
-    //         expect(response.status).toEqual(200);
-    //         expect(response.body.length).toEqual(1);
-    //         expect(response.body[0].name).toBe(newTask.name);
-    //         expect(response.body[0].description).toBe(newTask.description);
-    //         expect(response.body[0].deadline).toBe(newTask.deadline);
-    //         expect(response.body[0].done).toBe(newTask.done);
-    //         expect(response.body[0].user.firstName).toBe(newUser.firstName);
-    //         expect(response.body[0].user.lastName).toBe(newUser.lastName);
-    //         expect(response.body[0].user.email).toBe(newUser.email);
-    //         expect(response.body[0].user.role).toBe(newUser.role);
-    //         done()
-    //     });
+        it('with correct User Id', async done => {
+            const user = new User(newUser)
+            await user.save();
+            await request.post('/').send({...newTask, userId: user._id})
+            const response = await request.get('/user/' + user._id);
+            expect(response.status).toEqual(200);
+            expect(response.body.length).toEqual(1);
+            expect(response.body[0].name).toBe(newTask.name);
+            expect(response.body[0].description).toBe(newTask.description);
+            expect(response.body[0].deadline).toBe(newTask.deadline);
+            expect(response.body[0].done).toBe(newTask.done);
+            expect(response.body[0].user._id).toBe(newUser._id);
+            done()
+        });
 
-    //     it('with lack of task for user ID', async done => {
-    //         const user = new User(newUser)
-    //         await user.save();
-    //         const response = await request.get('/user/' + user._id);
-    //         expect(response.status).toEqual(404);
-    //         expect(response.text).toEqual('Tasks not found or incorrect if for user');
-    //         done()
-    //     });
+        it('with lack of task for user ID', async done => {
+            const user = new User(newUser)
+            await user.save();
+            const response = await request.get('/user/' + user._id);
+            expect(response.status).toEqual(404);
+            expect(response.text).toEqual('Tasks not found or incorrect if for user');
+            done()
+        });
 
-    //     it('with no User Id in database', async done => {
-    //         const response = await request.get('/user/6043cf5f980add1944946acc');
-    //         expect(response.status).toEqual(404);
-    //         expect(response.text).toEqual('Tasks not found or incorrect if for user');
-    //         done()
-    //     })
+        it('with no User Id in database', async done => {
+            const response = await request.get('/user/6043cf5f981add1944946acc');
+            expect(response.status).toEqual(404);
+            expect(response.text).toEqual('Tasks not found or incorrect if for user');
+            done()
+        })
 
-    //     it('with incorrect User Id', async done => {
-    //         const response = await request.get('/user/6043cf');
-    //         expect(response.status).toEqual(400);
-    //         expect(response.text).toEqual('User Id is not valid');
-    //         done()
-    //     })
-    // })
+        it('with incorrect User Id', async done => {
+            const response = await request.get('/user/6043cf');
+            expect(response.status).toEqual(400);
+            expect(response.text).toEqual('User Id is not valid');
+            done()
+        })
+    })
 
     describe ('DELETE /:id', () => {
         
@@ -232,7 +234,7 @@ describe('/tasks', () => {
         it('throw error - no data to delete', async done => {
             const task = new Task(newTask);
             await task.save()
-            const response = await request.delete('/6043cf5f980add1944946a23')
+            const response = await request.delete('/6043cf5f981add1944946a23')
             expect(response.status).toEqual(404);
             expect(response.text).toEqual('No data to delete');
             done() 
@@ -267,7 +269,7 @@ describe('/tasks', () => {
         });
 
         it('throw error - no task to update', async done => {
-            const response = await request.put('/6043cf5f980add1944946a23').send(newTask)
+            const response = await request.put('/6043cf5f981add1944946a23').send(newTask)
                 .send({name: 'Test task',
                 description: 'Updated task',
                 deadline: 1615923590,
@@ -319,7 +321,7 @@ describe('/tasks', () => {
         });
 
         it('throw error - project not found', async done => {
-            const response = await request.post('/').send({...newTask, projectId: '6043cf5f980add1944946a23'})
+            const response = await request.post('/').send({...newTask, projectId: '6043cf5f981add1944946a23'})
             expect(response.status).toEqual(404);
             expect(response.text).toEqual('Project not found');
             done()

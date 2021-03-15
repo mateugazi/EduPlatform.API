@@ -5,7 +5,9 @@ export interface ITask extends Document{
     name: string,
     description: string,
     deadline: number,
-    done: boolean
+    done: boolean,
+    project: Types.ObjectId,
+    user: Types.ObjectId
 }
 
 export const taskSchema = new Schema<ITask>( {
@@ -29,6 +31,14 @@ export const taskSchema = new Schema<ITask>( {
     done: {
         type: Boolean,
         required: true
+    },
+    project: {
+        type: Types.ObjectId,
+        ref: 'projectSchema'
+    },
+    user: {
+        type: Types.ObjectId,
+        ref: 'userSchema'
     }
 });
 

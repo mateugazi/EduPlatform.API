@@ -59,10 +59,17 @@ export const Register = (request: Request, response: Response): void => {
     })
 
     user.save()
+<<<<<<< HEAD
         .then((item:any) => {
             response.send("Item saved to DB");
         })
         .catch((err:any) => {
+=======
+        .then(item => {
+            response.send("Item saved to DB");
+        })
+        .catch(err => {
+>>>>>>> 945ca1c (Rebasing 1/2)
             response.status(400).send(`Unable to save item ${err}`);
         });
 }

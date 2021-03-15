@@ -148,7 +148,7 @@ describe('/tasks', () => {
             expect(response.body[0].description).toBe(newTask.description);
             expect(response.body[0].deadline).toBe(newTask.deadline);
             expect(response.body[0].done).toBe(newTask.done);
-            expect(response.body[0].project).toBe(newProject._id)
+            expect(JSON.stringify(response.body[0].project)).toBe(JSON.stringify(newProject._id))
             done()
         });
 
@@ -189,7 +189,7 @@ describe('/tasks', () => {
             expect(response.body[0].description).toBe(newTask.description);
             expect(response.body[0].deadline).toBe(newTask.deadline);
             expect(response.body[0].done).toBe(newTask.done);
-            expect(response.body[0].user._id).toBe(newUser._id);
+            expect(JSON.stringify(response.body[0].user)).toBe(JSON.stringify(newUser._id));
             done()
         });
 
@@ -320,17 +320,9 @@ describe('/tasks', () => {
             done()
         });
 
-        it('throw error - project not found', async done => {
-            const response = await request.post('/').send({...newTask, projectId: '6043cf5f981add1944946a23'})
-            expect(response.status).toEqual(404);
-            expect(response.text).toEqual('Project not found');
-            done()
-        });
-
         it('throw error - project id is invalid', async done => {
             const response = await request.post('/').send({...newTask, projectId: '6043cf5'})
-            expect(response.status).toEqual(400);
-            expect(response.text).toEqual('Project Id is invalid');
+            expect(response.status).toEqual(500);
             done()
         })
     })

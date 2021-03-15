@@ -91,18 +91,7 @@ Status: 200 OK
         "description": "Lorem lorem lorem lorem",
         "deadline": 1614366265,
         "done": false,
-        "project": {
-            "authors": [
-                "Ania",
-                "Maja"
-            ],
-            "_id": "603509b488103d2df0106cbb",
-            "title": "New project",
-            "description": "This is our first project",
-            "linkToDemo": "www.project.pl",
-            "linkToGitHub": "www.github.pl/project",
-            "timestamp": 1614088628772
-        },
+        "project": "603509b488103d2df0106cbb"
         "__v": 0
     },
     {
@@ -111,18 +100,7 @@ Status: 200 OK
         "description": "Lorem lorem lorem lorem",
         "deadline": 1614366265,
         "done": false,
-        "project": {
-            "authors": [
-                "Ania",
-                "Maja"
-            ],
-            "_id": "603509b488103d2df0106cbb",
-            "title": "New project",
-            "description": "This is our first project",
-            "linkToDemo": "www.project.pl",
-            "linkToGitHub": "www.github.pl/project",
-            "timestamp": 1614088628772
-        },
+        "project":  "603509b488103d2df0106cbb",
         "__v": 0
     }
 ]

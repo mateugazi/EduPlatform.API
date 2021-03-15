@@ -11,6 +11,7 @@ const doc = {
     },
     host: "eduplatformapi.herokuapp.com",
     basePath: "/",
+    
     schemes: ['https'],
     consumes: ['application/json'],
     produces: ['application/json'],

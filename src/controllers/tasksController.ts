@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import {Types} from 'mongoose';
 import {Task} from '../models/tasksSchema';
 import Project from '../models/projectSchema';
-import User from '../models/userSchema';
+import {User} from '../models/userSchema';
 
 export const AllTasks =  async (req:Request, res:Response) => {
 

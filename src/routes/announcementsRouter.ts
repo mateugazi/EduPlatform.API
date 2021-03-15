@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteAnnouncement, getAllAnnouncements, getAnnouncementById, saveAnnouncement, updateAnnouncement,  } from 'src/controllers/announcementsController';
+import { deleteAnnouncement, getAllAnnouncements, getAnnouncementById, saveAnnouncement, updateAnnouncement,  } from '../controllers/announcementsController';
 
 const announcementRouter = express.Router();
 

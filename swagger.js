@@ -9,7 +9,7 @@ const doc = {
         title: "EduPlatform.API",
         description: "This is API for EduPlatform"
     },
-    host: "localhost:3000",
+    host: "https://eduplatformapi.herokuapp.com",
     basePath: "/",
     schemes: ['http', 'https'],
     consumes: ['application/json'],

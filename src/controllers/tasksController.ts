@@ -165,6 +165,8 @@ export const UpdateTask = async (req:Request,res:Response) => {
             description: req.body.description,
             deadline: req.body.deadline,
             done: req.body.done,
+            project: req.body.projectId,
+            user: req.body.userId
     } 
 
     try {

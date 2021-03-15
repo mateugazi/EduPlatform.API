@@ -8,12 +8,13 @@ import app from '../../src/app'
 
 const request = supertest(app)
 
+const authorId = new mongoose.Types.ObjectId("604a7ba6d610101287aa2957")
 const newProject = {
     _id: new mongoose.Types.ObjectId(),
     title: "test project",
     description: "This is first project",
-    mentor: "test",
-    authors: ["test", "test"],
+    mentor: "604a7b12d610101287aa2955",
+    authors: [authorId],
     linkToDemo: 'www.test.pl',
     linkToGitHub: 'www.test.com/test',
     timestamp: Date.now()
@@ -33,7 +34,8 @@ describe('/projects', () => {
         expect(project._id).toBeDefined();
         expect(project.title).toBe(newProject.title);
         expect(project.description).toBe(newProject.description);
-        expect(project.mentor).toBe(newProject.mentor);
+        expect(JSON.stringify(project.mentor)).toEqual(JSON.stringify(newProject.mentor));
+        expect(project.authors.length).toBe(newProject.authors.length);
         expect(project.linkToDemo).toBe(newProject.linkToDemo);
         expect(project.linkToGitHub).toBe(newProject.linkToGitHub);
     });
@@ -45,7 +47,7 @@ describe('/projects', () => {
         done()
     })
 
-    it('GET /projects', async (done) => {
+    it('GET /projects/{projectIs}', async (done) => {
         const project = new Project(newProject)
         await project.save()
         const response = await request.get('/projects/' + project._id)

@@ -5,7 +5,7 @@
         "title": "EduPlatform.API",
         "description": "This is API for EduPlatform"
     },
-    "host": "localhost:3000",
+    "host": "eduplatformapi.herokuapp.com",
     "basePath": "/",
     "tags": [
         {

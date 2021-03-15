@@ -2,10 +2,19 @@ import { Request, Response } from 'express';
 import {Types} from 'mongoose';
 import {Task} from '../models/tasksSchema';
 import Project from '../models/projectSchema';
+import User from '../models/userSchema';
 
 export const AllTasks =  async (req:Request, res:Response) => {
-    const tasksList = await Task.find();
-    res.send(tasksList)
+
+    try {
+        const tasksList = await Task.find();
+        res.send(tasksList)
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        })
+    }
+  
 }
 
 export const TaskById = async (req:Request, res:Response) => {
@@ -13,12 +22,19 @@ export const TaskById = async (req:Request, res:Response) => {
     if (!Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).send('Id is invalid')
     }
-    const task = await Task.findById(req.params.id);
 
-    if (!task) {
-        return res.status(404).send('Task not found')
-    } 
-    res.send(task._id) 
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) {
+            return res.status(404).send('Task not found')
+        } 
+        res.send(task) 
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        })
+    }
+
 }
 
 export const TasksByProject = async (req:Request, res:Response) => {
@@ -27,89 +43,113 @@ export const TasksByProject = async (req:Request, res:Response) => {
         return res.status(400).send('Project Id is not valid');
     } 
 
-    const tasksByProject = await Task.find({"project._id": req.params.id});
-
-    if (tasksByProject.length > 0) {
-        return res.send(tasksByProject)
-    } 
-    
-    res.status(404).send('Tasks not found or incorrect id for project')
+    try {
+        const tasksByProject = await Task.find({"project": Types.ObjectId(req.params.id)});
+        if (tasksByProject.length > 0) {
+            return res.send(tasksByProject)
+        } 
+        res.status(404).send('Tasks not found or incorrect id for project')
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        })
+    }
     
 }
 
-// export const TasksByUser = async (req:Request, res:Response) => {
+export const TasksByUser = async (req:Request, res:Response) => {
 
-//     if(!Types.ObjectId.isValid(req.params.id)) {
-//         return res.status(400).send('User Id is not valid');
-//     }
+    if(!Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).send('User Id is not valid');
+    }
 
-//     const tasksByUser = await Task.find({"user._id": req.params.id});
+    try {
+        const tasksByUser = await Task.find({"user": Types.ObjectId(req.params.id)});
+        if (tasksByUser.length > 0) {
+            return res.send(tasksByUser)
+        } 
+        res.status(404).send('Tasks not found or incorrect if for user')
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        })
+    }
+}
 
-//     if (tasksByUser.length > 0) {
-//         return res.send(tasksByUser)
-//     } 
-//     res.status(404).send('Tasks not found')
-// }
+export const TasksByUserAndProject = async (req: Request, res: Response) => {
+    if (!Types.ObjectId.isValid(req.params.projectId)) {
+        return res.status(400).send('Project Id is not valid');
+    } 
+    if (!Types.ObjectId.isValid(req.params.userId)) {
+        return res.status(400).send('User Id is not valid');
+    }
 
-// export const TasksByUserAndProject = async (req: Request, res: Response) => {
-//     if (!Types.ObjectId.isValid(req.params.projectId)) {
-//         return res.status(400).send('Project Id is not valid');
-//     } 
-//     if (!Types.ObjectId.isValid(req.params.userId)) {
-//         return res.status(400).send('Project Id is not valid');
-//     }
-
-//     const tasksByUserAndProject = await Task.find({"user._id": req.params.id, "project._id": req.params.id});
-
-//     if (tasksByUserAndProject.length > 0) {
-//         return res.send(tasksByUserAndProject)
-//     }
-//     res.status(404).send('Tasks not found')
-// }
+    try {
+        const tasksByUserAndProject = await Task.find({"user": Types.ObjectId(req.params.userId), "project": Types.ObjectId(req.params.projectId)});   
+        if (tasksByUserAndProject.length > 0) {
+            return res.send(tasksByUserAndProject)
+        }
+        res.status(404).send('Tasks not found')
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        })
+    }
+}
 
 export const AddTask = async (req:Request, res:Response) => {
 
-    let task;
-    if (req.body.projectId) {
-        if(!Types.ObjectId.isValid(req.body.projectId)) {
-            return res.status(400).send('Project Id is invalid')
-        }
-        const projectData = await Project.findById(req.body.projectId);
+    try {
+        let task;
+        if (req.body.projectId && req.body.userId) {
+            const project = await Project.findById(req.body.projectId);
+            const user = await User.findById(req.body.userId);
+            task = new Task({
+                _id: new Types.ObjectId(),
+                name: req.body.name,
+                description: req.body.description,
+                deadline: req.body.deadline,
+                done: false,
+                project: project,
+                user: user
+            })
+        } else if (req.body.projectId) {
+            const project = await Project.findById(req.body.projectId)
+            task = new Task({
+                _id: new Types.ObjectId(),
+                name: req.body.name,
+                description: req.body.description,
+                deadline: req.body.deadline,
+                done: false,
+                project: project
+            })
+        }  else if (req.body.userId) {
+            const user = await User.findById(req.body.userId)
+            task = new Task({
+                _id: new Types.ObjectId(),
+                name: req.body.name,
+                description: req.body.description,
+                deadline: req.body.deadline,
+                done: false,
+                user: user
+            })
+        } else {
+            task = new Task({
+                _id: new Types.ObjectId(),
+                name: req.body.name,
+                description: req.body.description,
+                deadline: req.body.deadline,
+                done: false })
+        }  
 
-        if (!projectData) {
-            return res.status(404).send('Project not found')
-        }
-
-        task = new Task({
-            _id: new Types.ObjectId(),
-            name: req.body.name,
-            description: req.body.description,
-            deadline: req.body.deadline,
-            done: false,
-            project: {
-                _id: projectData._id,
-                title: projectData.title,
-                description: projectData.description,
-                mentor: projectData.mentor,
-                authors: projectData.authors,
-                linkToDemo: projectData.linkToDemo,
-                linkToGitHub: projectData.linkToGitHub,
-                timestamp: projectData.timestamp
-            }
+        const response = await task.save();
+        res.send(response)
+    } catch (error) {
+        res.status(500).json({
+            error: error
         })
-    } else {
-        task = new Task({
-            _id: new Types.ObjectId(),
-            name: req.body.name,
-            description: req.body.description,
-            deadline: req.body.deadline,
-            done: false,
-    })
     }
- 
-    task = await task.save();
-    
-    res.send(task);
+
 
 }
 
@@ -127,14 +167,19 @@ export const UpdateTask = async (req:Request,res:Response) => {
             done: req.body.done,
     } 
 
-    const task = await Task.findByIdAndUpdate(req.params.id, 
-        taskData,
-        {new: true});
-    
-    if(!task) {
-        return res.status(404).send('No task to update')
+    try {
+        const task = await Task.findByIdAndUpdate(req.params.id, 
+            taskData,
+            {new: true});
+        if(!task) {
+            return res.status(404).send('No task to update')
+        }
+        res.send(task)
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        })
     }
-    res.send(task)
 }
 
 export const DeleteTask = async (req: Request, res: Response) => {
@@ -143,12 +188,16 @@ export const DeleteTask = async (req: Request, res: Response) => {
         return res.status(400).send('Id is not valid');
     } 
 
-    const task = await Task.findByIdAndRemove(req.params.id)
-
-    if (!task) {
-        return res.status(404).send('No data to delete')
+    try {
+        const task = await Task.findByIdAndRemove(req.params.id)
+        if (!task) {
+            return res.status(404).send('No data to delete')
+        }
+        res.send(task)
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        })
     }
-
-    res.send(task)
 }
 

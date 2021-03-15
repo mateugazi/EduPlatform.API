@@ -15,7 +15,7 @@ export const sampleController = (req: Request, res: Response) => {
         message: 'Handling POST requests to /sampleRoute',
       });
     })
-    .catch((err) => {
+    .catch((err: any) => {
       console.log(err);
       res.status(500).json({ error: err });
     });

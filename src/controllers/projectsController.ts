@@ -8,10 +8,10 @@ exports.projects_get_all = (req: Request, res: Response) => {
     Project
         .find({})
         .exec()
-        .then(response => {
+        .then((response: any) => {
             res.status(200).json(response)
         })
-        .catch(error => {
+        .catch((error: any) => {
             res.status(500).json({
                 error: error
             })
@@ -24,7 +24,7 @@ exports.projects_get_single = (req: Request, res: Response) => {
     Project
         .findById(req.params.projectId)
         .exec()
-        .then(document => {
+        .then((document: any) => {
             if (document) {
                 res.status(200).json(document)
             } else {
@@ -33,7 +33,7 @@ exports.projects_get_single = (req: Request, res: Response) => {
                 })
             }
         })
-        .catch(error => {
+        .catch((error: any) => {
             res.status(500).json({
                 error: error
             })
@@ -41,7 +41,7 @@ exports.projects_get_single = (req: Request, res: Response) => {
 }
 
 exports.projects_add_new_project = async (req: Request, res: Response) => {
-    const userMentor = await User.findById(req.body.mentor).catch(err => res.status(404).send('Mentor id is not valid'))
+    const userMentor = await User.findById(req.body.mentor).catch((err: any) => res.status(404).send('Mentor id is not valid'))
     if (!userMentor) res.status(404).send('Mentor not found')
     const authorsArray = await req.body.authors
     const userAuthors = await authorsArray.map( async (author: string) => {
@@ -61,12 +61,12 @@ exports.projects_add_new_project = async (req: Request, res: Response) => {
     });
     newProject
         .save()
-        .then( response => {
+        .then( (response: any) => {
             res.status(201).json({
                 message: 'Project added successfully!'
             });
         })
-        .catch( error => {
+        .catch( (error: any) => {
             res.status(500).json({
                 error: error
             })
@@ -77,7 +77,7 @@ exports.projects_update_project = async (req: Request, res: Response) => {
     Types.ObjectId.isValid(req.params.projectId) ? null : res.status(400).send('Id is not valid')
     
     if (!req.body.title || !req.body.description || !req.body.mentor || !req.body.authors || !req.body.linkToDemo || !req.body.linkToGitHub) res.status(400).send('Missing parameter')
-    const userMentor = User.findById(req.body.mentor).catch(err => res.status(404).send('Mentor id is not valid'))
+    const userMentor = User.findById(req.body.mentor).catch((err: any) => res.status(404).send('Mentor id is not valid'))
     if (!userMentor) res.status(404).send('Mentor not found')
     const authorsArray = await req.body.authors
     const userAuthors = await authorsArray.map( async (author: string) => {
@@ -98,12 +98,12 @@ exports.projects_update_project = async (req: Request, res: Response) => {
 
     Project.findByIdAndUpdate(req.params.projectId, projectData, {new: true})
         .exec()
-        .then(response => {
+        .then((response: any) => {
             res.status(200).json({
                 message: "Updated successfully!"
             })
         })
-        .catch( error => {
+        .catch( (error: any) => {
             console.log(userAuthors)
             res.status(500).json({
                 error: error
@@ -116,7 +116,7 @@ exports.projects_delete_project = (req: Request, res: Response) => {
 
     Project.findByIdAndRemove(req.params.projectId)
         .exec()
-        .then(doc => {
+        .then((doc: any) => {
             if (doc) {
                 res.status(200).json({
                     message: "Deleted successfully"
@@ -127,7 +127,7 @@ exports.projects_delete_project = (req: Request, res: Response) => {
                 })
             }      
         })
-        .catch( error => {
+        .catch( (error: any) => {
             res.status(500).json({
                 error: error
             })

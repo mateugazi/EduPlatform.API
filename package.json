@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "nodemon index.ts",
     "test": "jest",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "swagger": "node swagger.js"
   },
   "repository": {
     "type": "git",
@@ -27,18 +28,24 @@
     "exec": "ts-node -r tsconfig-paths/register ./src"
   },
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "swagger-autogen": "^2.7.1",
+    "swagger-ui": "^3.45.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.20",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.10.3",
     "@types/morgan": "^1.9.2",
+    "@types/swagger-ui-express": "^4.1.2",
     "@types/supertest": "^2.0.10",
     "jest": "^26.6.3",
     "jest-extended": "^0.11.5",

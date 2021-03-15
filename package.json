@@ -38,9 +38,7 @@
     "morgan": "^1.10.0",
     "swagger-autogen": "^2.7.1",
     "swagger-ui": "^3.45.0",
-    "swagger-ui-express": "^4.1.6"
-  },
-  "devDependencies": {
+    "swagger-ui-express": "^4.1.6",
     "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.20",

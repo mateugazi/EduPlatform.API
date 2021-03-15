@@ -13,6 +13,7 @@
     "target": "es6",
     "moduleResolution": "node",
     "paths": {},
+    "resolveJsonModule": true,
     "types": [
       "node",
       "jest"

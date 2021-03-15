@@ -61,6 +61,10 @@ All of the application's code should be stored in 'src' folder and tests should 
 
 The sample .ts files in the following folders are temporary, just to help you with getting the idea of the arrangement.
 
+## Group
+
+The docs for group management were build with swagger ui and can be found at adress https://eduplatformapi.herokuapp.com/doc
+
 ## Projects
 
 ### GET `/projects`

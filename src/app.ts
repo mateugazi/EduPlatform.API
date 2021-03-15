@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import sampleRouter from './routes/sampleRouter';
 import announcementRouter from './routes/announcementsRouter';
+import projectsRouter from './routes/projectsRouter';
+
 
 const app = express();
 
@@ -36,6 +38,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use('/sample', sampleRouter);
 app.use('/announcements', announcementRouter);
+app.use('/projects', projectsRouter);
 
 app.use('/', (req: Request, res: Response) => {
   res.status(404).json({

@@ -1,16 +1,16 @@
 import express from 'express';
-import { deleteAnnouncement, getAllAnnouncements, getAnnouncementById, saveAnnouncement, updateAnnouncement,  } from 'src/controllers/announcementsController';
+const announcementsController = require('../controllers/announcementsController');
 
 const announcementRouter = express.Router();
 
-announcementRouter.get('/', getAllAnnouncements)
+announcementRouter.get('/', announcementsController.getAllAnnouncements)
 
-announcementRouter.get('/:id', getAnnouncementById)
+announcementRouter.get('/:id', announcementsController.getAnnouncementById)
 
-announcementRouter.post('/', saveAnnouncement)
+announcementRouter.post('/', announcementsController.saveAnnouncement)
 
-announcementRouter.patch('/:id', updateAnnouncement)
+announcementRouter.patch('/:id', announcementsController.updateAnnouncement)
 
-announcementRouter.delete('/:id', deleteAnnouncement)
+announcementRouter.delete('/:id', announcementsController.deleteAnnouncement)
 
 export default announcementRouter;

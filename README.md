@@ -132,6 +132,21 @@ Status: 200 OK
     "description": "Lorem lorem lorem lorem",
     "deadline": 1614366265,
     "done": false,
+    "project": {
+        "_id": "604cb10425a8d00a9870cd80",
+        "title": "Third project",
+        "description": "This is first project",
+        "mentor": "604a7b12d610101287aa2955",
+        "authors": [
+            {
+                "_id": "604cb136f37f141378db09e7"
+            }
+        ],
+        "linkToDemo": "www.demo.pl",
+        "linkToGitHub": "www.link.pl",
+        "timestamp": 1615638838149,
+        "__v": 0
+    },
     "__v": 0
 }
 ```

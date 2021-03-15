@@ -2,6 +2,7 @@
   "name": "eduplatfrom.api",
   "version": "1.0.0",
   "scripts": {
+    "start": "node index.ts",
     "dev": "nodemon index.ts",
     "test": "jest",
     "format": "prettier --write \"src/**/*.ts\"",

@@ -1,11 +1,9 @@
 import {Request, Response} from "express";
-import {User, IUser} from "../models/authorizationSchema";
+import {User, IUser} from "../models/userSchema";
 import mongoose from "mongoose";
 import {MongoError, Collection} from "MongoDB"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-
-
 
 const checkLoginForm = (object: any): Object => {
     const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
@@ -19,7 +17,7 @@ const isValidPassword = (db_password: any, password: any): boolean => {
 
 // Sprawdzanie dostepnych uzytkownikow w bazie
 export const ShowAll = (request: Request, response:Response): void => {
-    mongoose.connection.db.collection("users", function(err: MongoError, collection: Collection){
+    mongoose.connection.db.collection("userschemas", function(err: MongoError, collection: Collection){
         collection.find({}).toArray(function(err: MongoError, data: any[]){
             response.status(200).send(data)
         })
@@ -27,7 +25,7 @@ export const ShowAll = (request: Request, response:Response): void => {
 }
 
 export const LogIn = (request: Request, response:Response) => { 
-    mongoose.connection.db.collection("users", function (err: MongoError, collection: Collection) {       
+    mongoose.connection.db.collection("userschemas", function (err: MongoError, collection: Collection) {       
         collection.findOne(checkLoginForm(request.query), function (err: MongoError, data: IUser) {    
 
             if(!data || !isValidPassword(data.password, request.query.password)) { 
@@ -53,8 +51,8 @@ export const Register = (request: Request, response: Response): void => {
         firstName: request.query.firstName,
         lastName: request.query.lastName,
         email: request.query.email,
-        password: bcrypt.hashSync(request.query.password, 10),
         login: request.query.login,
+        password: bcrypt.hashSync(request.query.password, 10),
         role: request.query.role
     })
 

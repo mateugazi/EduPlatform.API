@@ -1,5 +1,15 @@
 import mongoose from 'mongoose'
 
+export interface IUser extends Document{
+    _id: mongoose.Schema.Types.ObjectId,
+    firstName: string,
+    lastName: string,
+    email: string,
+    login: string,
+    password: string,
+    role:string
+}
+
 const userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     firstName: {
@@ -15,7 +25,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-
     },
     login:{
         type:String,
@@ -31,4 +40,4 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('userSchema', userSchema)
+export const User = mongoose.model('userSchema', userSchema);

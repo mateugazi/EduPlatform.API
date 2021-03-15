@@ -10,7 +10,7 @@ export interface IUser extends Document{
     role:string
 }
 
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     firstName: {
         type: String,

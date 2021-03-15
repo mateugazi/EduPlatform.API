@@ -7,7 +7,28 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "tags": [],
+  "tags": [
+    {
+      "name": "Groups",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Tasks",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Projects",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Announcements",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Authorization",
+      "description": "Endpoints"
+    }
+  ],
   "schemes": [
     "http",
     "https"
@@ -73,7 +94,9 @@
     },
     "/group/createGroup": {
       "post": {
-        "tags": [],
+        "tags": [
+          "Groups"
+        ],
         "description": "",
         "parameters": [
           {
@@ -112,7 +135,9 @@
     },
     "/group/": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Groups"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
@@ -127,7 +152,9 @@
     },
     "/group/{groupId}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Groups"
+        ],
         "description": "",
         "parameters": [
           {
@@ -152,7 +179,9 @@
     },
     "/group/addMember/{groupId}": {
       "put": {
-        "tags": [],
+        "tags": [
+          "Groups"
+        ],
         "description": "",
         "parameters": [
           {
@@ -190,7 +219,9 @@
     },
     "/group/deleteMember/{groupId}": {
       "put": {
-        "tags": [],
+        "tags": [
+          "Groups"
+        ],
         "description": "",
         "parameters": [
           {
@@ -228,7 +259,9 @@
     },
     "/group/changeName/{groupId}": {
       "put": {
-        "tags": [],
+        "tags": [
+          "Groups"
+        ],
         "description": "",
         "parameters": [
           {
@@ -263,7 +296,9 @@
     },
     "/group/deleteGroup/{groupId}": {
       "delete": {
-        "tags": [],
+        "tags": [
+          "Groups"
+        ],
         "description": "",
         "parameters": [
           {

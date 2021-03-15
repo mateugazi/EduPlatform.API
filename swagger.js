@@ -1,4 +1,5 @@
 const swaggerAutogen = require('swagger-autogen')()
+const mongoose = require('mongoose')
 
 const outputFile = './swagger_output.json'
 const endpointsFiles = ['./src/app.ts']
@@ -14,6 +15,28 @@ const doc = {
     schemes: ['http', 'https'],
     consumes: ['application/json'],
     produces: ['application/json'],
+    tags: [
+        {
+            name: "Groups",
+            description: "Endpoints"
+        },
+        {
+            name: "Tasks",
+            description: "Endpoints"
+        },
+        {
+            name: "Projects",
+            description: "Endpoints"
+        },
+        {
+            name: "Announcements",
+            description: "Endpoints"
+        },
+        {
+            name: "Authorization",
+            description: "Endpoints"
+        }
+    ],
     securityDefinitions: {
         api_key: {
             type: "apiKey",

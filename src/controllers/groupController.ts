@@ -4,6 +4,7 @@ import groupSchema from '../models/groupSchema';
 import userSchema from '../models/userSchema';
 
 export const groupCreateGroup = async (req: Request, res: Response) => {
+  // #swagger.tags = ['Groups']
   try {
   const userMentor = await userSchema.findById(req.body.mentor)
       const groupName = await groupSchema.findOne({ groupName: req.body.groupName })
@@ -40,6 +41,8 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
 };
 
 export const groupGetAllGroup = (req: Request, res: Response) => {
+    // #swagger.tags = ['Groups']
+
     groupSchema.find()
     .select('_id groupName mentor members')
     .exec()
@@ -57,6 +60,8 @@ export const groupGetAllGroup = (req: Request, res: Response) => {
 }
 
 export const groupGetSingleGroup = (req: Request, res: Response) => {
+    // #swagger.tags = ['Groups']
+
   const id = req.params.groupId
   groupSchema.findById(id)
     .select('_id groupName mentor members')
@@ -79,6 +84,8 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
 }
 
 export const groupAddMember = async (req: Request, res: Response) => {
+    // #swagger.tags = ['Groups']
+
   const groupId = req.params.groupId
   try {
     const member: any = await userSchema.findById(req.body._id)
@@ -112,6 +119,8 @@ export const groupAddMember = async (req: Request, res: Response) => {
 }
 
 export const groupDeleteMember = async (req: Request, res: Response) => {
+    // #swagger.tags = ['Groups']
+
   const groupId = req.params.groupId
   try {
     const group: any = await groupSchema.findById(groupId)
@@ -149,6 +158,8 @@ export const groupDeleteMember = async (req: Request, res: Response) => {
 }
 
 export const groupChangeName = async(req: Request, res: Response) => {
+    // #swagger.tags = ['Groups']
+
   const groupId = req.params.groupId
   try {
     groupSchema.updateOne( {_id: groupId}, { $set: { groupName: req.body.newName}})
@@ -165,6 +176,8 @@ export const groupChangeName = async(req: Request, res: Response) => {
 }
 
 export const groupDeleteGroup = (req: Request, res: Response) => {
+    // #swagger.tags = ['Groups']
+
   const groupId = req.params.groupId
   
     groupSchema.deleteOne({ _id: groupId})

@@ -11,9 +11,9 @@ import {
 
 const groupRouter = express.Router();
 
-groupRouter.post('/createGroup', groupCreateGroup);
 groupRouter.get('/', groupGetAllGroup)
 groupRouter.get('/:groupId', groupGetSingleGroup)
+groupRouter.post('/createGroup', groupCreateGroup);
 groupRouter.put('/addMember/:groupId', groupAddMember)
 groupRouter.put('/deleteMember/:groupId', groupDeleteMember)
 groupRouter.put('/changeName/:groupId', groupChangeName)

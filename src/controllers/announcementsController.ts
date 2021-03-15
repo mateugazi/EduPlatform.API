@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose, { Types } from 'mongoose';
-import { Announcement } from 'src/models/announcementSchema';
+import { Announcement } from '../models/announcementSchema';
 
 export const getAllAnnouncements =  async (req:Request, res:Response) => {
   res.send(await Announcement.find())

@@ -55,42 +55,6 @@
     "application/json"
   ],
   "paths": {
-    "/sample/sampleRoute": {
-      "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "value": {
-                  "type": "string",
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/group/": {
       "get": {
         "tags": [

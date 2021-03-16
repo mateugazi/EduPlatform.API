@@ -888,14 +888,11 @@
         "tags": [
           "Authorization"
         ],
-        "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",
+        "description": "",
         "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
@@ -905,13 +902,8 @@
         "tags": [
           "Authorization"
         ],
-        "description": "Enable created user to login into the page. Returning JWT token.",
+        "description": "",
         "parameters": [
-          {
-            "name": "login",
-            "in": "query",
-            "type": "string"
-          },
           {
             "name": "password",
             "in": "query",
@@ -937,44 +929,10 @@
           "Authorization"
         ],
         "description": "",
-        "parameters": [
-          {
-            "name": "firstName",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "lastName",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "login",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "role",
-            "in": "query",
-            "type": "string"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description":"Bad Request"
           }
         }
       }
@@ -984,11 +942,14 @@
         "tags": [
           "Announcements"
         ],
-        "description": "",
+        "description": "Endpoint to get all announcements.",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/allAnnouncements"
+            }
           }
         }
       },
@@ -996,27 +957,16 @@
         "tags": [
           "Announcements"
         ],
-        "description": "",
+        "description": "Endpoint to create an announcement.",
         "parameters": [
           {
-            "name": "obj",
+            "name": "newAnnouncement",
             "in": "body",
+            "description": "Create a new announcement",
+            "required": true,
+            "type": "object",
             "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "type": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "content\r": {
-                  "type": "string",
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/announcement"
             }
           }
         ],
@@ -1025,7 +975,10 @@
             "description": "OK"
           },
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/announcementWithId"
+            }
           }
         }
       }
@@ -1035,21 +988,42 @@
         "tags": [
           "Announcements"
         ],
-        "description": "",
+        "description": "Endpoint to get an announcement by Id.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "announcementId",
+            "description": "Id of the announcement",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/announcementWithId"
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Announcement with given Id does not exist"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
@@ -1057,13 +1031,23 @@
         "tags": [
           "Announcements"
         ],
-        "description": "",
+        "description": "Endpoint to update an announcement.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "update of data",
+            "in": "body",
+            "description": "One parameter or more can be changed",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/updateAnnouncement"
+            }
           }
         ],
         "responses": {
@@ -1074,7 +1058,19 @@
             "description": "No Content"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Announcement with given Id does not exist"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
@@ -1082,12 +1078,18 @@
         "tags": [
           "Announcements"
         ],
-        "description": "",
+        "description": "Endpoint to delete an announcement.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "announcementId",
+            "description": "Id of the announcement",
+            "in": "query",
             "type": "string"
           }
         ],
@@ -1099,10 +1101,34 @@
             "description": "No Content"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Given id is not valid"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "There is no announcement with given id"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -1231,6 +1257,77 @@
       "required": [
         "newName"
       ]
+    },
+    "allAnnouncements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "604fd0eb98161c531cc51c04"
+          },
+          "title": {
+            "type": "string",
+            "example": "Title2"
+          },
+          "type": {
+            "type": "string",
+            "example": "type"
+          },
+          "content": {
+            "type": "string",
+            "example": "Becon Ipsummmm..."
+          }
+        }
+      }
+    },
+    "announcementWithId": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "604fd0eb98161c531cc51c04"
+        },
+        "title": {
+          "type": "string",
+          "example": "sample announcement name"
+        },
+        "content": {
+          "type": "string",
+          "example": "sample announcement content"
+        },
+        "type": {
+          "type": "string",
+          "example": "sample type"
+        }
+      }
+    },
+    "announcement": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "sample announcement name"
+        },
+        "content": {
+          "type": "string",
+          "example": "sample announcement content"
+        },
+        "type": {
+          "type": "string",
+          "example": "sample type"
+        }
+      }
+    },
+    "updateAnnouncement": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "new announcement name"
+        }
+      }
     }
   }
 }

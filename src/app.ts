@@ -3,7 +3,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import sampleRouter from './routes/sampleRouter';
 import groupRouter from './routes/groupRouter'
 import swaggerUi from 'swagger-ui-express'
 import swaggerDocument from '../public/swagger.json'
@@ -44,7 +43,6 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 //app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-app.use('/sample', sampleRouter);
 app.use('/group', groupRouter)
 app.use('/projects', projectsRouter);
 app.use('/tasks', tasksRouter)

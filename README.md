@@ -65,6 +65,14 @@ The sample .ts files in the following folders are temporary, just to help you wi
 
 The docs for group management were build with swagger ui and can be found at adress https://eduplatformapi.herokuapp.com/doc
 
+## Announcements
+
+The docs for announcements were build with swagger ui and can be found at adress https://eduplatformapi.herokuapp.com/doc
+
+## Authorization
+
+The docs for authorization were build with swagger ui and can be found at adress https://eduplatformapi.herokuapp.com/doc
+
 ## Projects
 
 ### GET `/projects`
@@ -81,6 +89,141 @@ Get single project informations using project id.
 
 #### Example Response
 
+```
+Status: 200 OK
+
+{
+    "authors": [
+        "Ania",
+        "Kasia",
+        "Ada"
+    ],
+    "_id": "60428ed89187ba2c9807e148",
+    "title": "Pro to delete",
+    "description": "This is our first project",
+    "mentor": "Józek",
+    "linkToDemo": "www.project.asdpl",
+    "linkToGitHub": "www.github.pl/project20",
+    "timestamp": 1614974680847,
+    "__v": 0
+}
+```
+
+### POST `/projects`
+
+Create new project.
+
+#### Request body
+
+| Name           | Type   |
+| -------------- | ------ |
+| Title          | String |
+| Description    | String |
+| Mentor         | String |
+| Authors        | Array  |
+| Link to demo   | String |
+| Link to GitHub | String |
+
+#### Example Request
+
+**POST** /projects
+
+```
+{
+  "authors": [
+    "Ania",
+    "zuza"
+  ],
+  "title": "First project",
+  "description": "This is our first project",
+  "mentor": "Józef",
+  "linkToDemo": "www.project.pl",
+  "linkToGitHub": "www.github.pl/project"
+}
+```
+
+#### Example Response
+
+```
+Status: 201 Created
+
+{
+    "message": "Project added successfully!"
+}
+```
+
+### PUT `/projects/{projectId}`
+
+Update informations about project using project id.
+
+#### Parameters
+
+| Name      | Type   |
+| --------- | ------ |
+| ProjectId | String |
+
+#### Request body
+
+| Name           | Type   |
+| -------------- | ------ |
+| Title          | String |
+| Description    | String |
+| Mentor         | String |
+| Authors        | Array  |
+| Link to demo   | String |
+| Link to GitHub | String |
+
+### Example Request and Request body
+
+**PUT** /projects/60428ed89187ba2c9807e148
+
+```
+{
+    "authors": [
+        "Ania",
+        "Kasia",
+        "Ada"
+    ],
+    "title": "Pro to delete",
+    "description": "This is our first project",
+    "mentor": "Józek",
+    "linkToDemo": "www.project.asdpl",
+    "linkToGitHub": "www.github.pl/project20",
+}
+```
+
+#### Example Response
+
+```
+Status: 200 OK
+
+{
+    "message": "Updated successfully!"
+}
+```
+
+### DELETE `/projects/{projectId}`
+
+Delete single project using project id.
+
+#### Parameters
+
+| Name      | Type   |
+| --------- | ------ |
+| ProjectId | String |
+
+#### Example Request
+
+**DELETE** /projects/60428ed89187ba2c9807e148
+
+#### Example Response
+
+```
+Status: 200 OK
+{
+    "message": "Deleted successfully"
+}
+```
 ## TASKS
 
 ### GET /tasks

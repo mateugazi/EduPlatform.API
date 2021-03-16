@@ -5,6 +5,7 @@ import Project from '../models/projectSchema';
 import {User} from '../models/userSchema';
 
 export const AllTasks =  async (req:Request, res:Response) => {
+                  // #swagger.tags = ['Tasks']
 
     try {
         const tasksList = await Task.find();
@@ -18,6 +19,7 @@ export const AllTasks =  async (req:Request, res:Response) => {
 }
 
 export const TaskById = async (req:Request, res:Response) => {
+                  // #swagger.tags = ['Tasks']
 
     if (!Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).send('Id is invalid')
@@ -38,6 +40,7 @@ export const TaskById = async (req:Request, res:Response) => {
 }
 
 export const TasksByProject = async (req:Request, res:Response) => {
+                  // #swagger.tags = ['Tasks']
 
     if (!Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).send('Project Id is not valid');
@@ -58,6 +61,7 @@ export const TasksByProject = async (req:Request, res:Response) => {
 }
 
 export const TasksByUser = async (req:Request, res:Response) => {
+                  // #swagger.tags = ['Tasks']
 
     if(!Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).send('User Id is not valid');
@@ -77,6 +81,8 @@ export const TasksByUser = async (req:Request, res:Response) => {
 }
 
 export const TasksByUserAndProject = async (req: Request, res: Response) => {
+                      // #swagger.tags = ['Tasks']
+
     if (!Types.ObjectId.isValid(req.params.projectId)) {
         return res.status(400).send('Project Id is not valid');
     } 
@@ -98,12 +104,20 @@ export const TasksByUserAndProject = async (req: Request, res: Response) => {
 }
 
 export const AddTask = async (req:Request, res:Response) => {
+                  // #swagger.tags = ['Tasks']
 
     try {
         let task;
         if (req.body.projectId && req.body.userId) {
+            if (!Types.ObjectId.isValid(req.body.projectId)) {
+                return res.status(400).send('Project Id is not valid');
+            } 
+            if (!Types.ObjectId.isValid(req.body.userId)) {
+                return res.status(400).send('User Id is not valid');
+            }
             const project = await Project.findById(req.body.projectId);
             const user = await User.findById(req.body.userId);
+
             task = new Task({
                 _id: new Types.ObjectId(),
                 name: req.body.name,
@@ -114,6 +128,9 @@ export const AddTask = async (req:Request, res:Response) => {
                 user: user
             })
         } else if (req.body.projectId) {
+            if (!Types.ObjectId.isValid(req.body.projectId)) {
+                return res.status(400).send('Project Id is not valid');
+            } 
             const project = await Project.findById(req.body.projectId)
             task = new Task({
                 _id: new Types.ObjectId(),
@@ -124,6 +141,9 @@ export const AddTask = async (req:Request, res:Response) => {
                 project: project
             })
         }  else if (req.body.userId) {
+            if (!Types.ObjectId.isValid(req.body.userId)) {
+                return res.status(400).send('User Id is not valid');
+            }
             const user = await User.findById(req.body.userId)
             task = new Task({
                 _id: new Types.ObjectId(),
@@ -154,6 +174,7 @@ export const AddTask = async (req:Request, res:Response) => {
 }
 
 export const UpdateTask = async (req:Request,res:Response) => {
+                  // #swagger.tags = ['Tasks']
 
     if(!Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).send('Id is not valid')
@@ -164,7 +185,7 @@ export const UpdateTask = async (req:Request,res:Response) => {
             name: req.body.name,
             description: req.body.description,
             deadline: req.body.deadline,
-            done: req.body.done,
+            done: req.body.done
     } 
 
     try {
@@ -183,6 +204,7 @@ export const UpdateTask = async (req:Request,res:Response) => {
 }
 
 export const DeleteTask = async (req: Request, res: Response) => {
+                  // #swagger.tags = ['Tasks']
 
     if(!Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).send('Id is not valid');

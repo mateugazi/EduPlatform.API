@@ -4,10 +4,10 @@ exports.groupDeleteGroup = exports.groupChangeName = exports.groupDeleteMember =
 const tslib_1 = require("tslib");
 const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
 const groupSchema_1 = tslib_1.__importDefault(require("../models/groupSchema"));
-const userSchema_1 = tslib_1.__importDefault(require("../models/userSchema"));
+const userSchema_1 = require("../models/userSchema");
 const groupCreateGroup = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userMentor = yield userSchema_1.default.findById(req.body.mentor);
+        const userMentor = yield userSchema_1.User.findById(req.body.mentor);
         const groupName = yield groupSchema_1.default.findOne({ groupName: req.body.groupName });
         if (groupName) {
             res.status(404).json({
@@ -84,7 +84,7 @@ exports.groupGetSingleGroup = groupGetSingleGroup;
 const groupAddMember = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const groupId = req.params.groupId;
     try {
-        const member = yield userSchema_1.default.findById(req.body._id);
+        const member = yield userSchema_1.User.findById(req.body._id);
         const group = yield groupSchema_1.default.findById(groupId);
         if (group.members.some((obj) => member._id.equals(obj._id))) {
             return res.status(404).json({
@@ -120,7 +120,7 @@ const groupDeleteMember = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0
     const groupId = req.params.groupId;
     try {
         const group = yield groupSchema_1.default.findById(groupId);
-        const member = yield userSchema_1.default.findById(req.body._id);
+        const member = yield userSchema_1.User.findById(req.body._id);
         if (!group.members.some((obj) => member._id.equals(obj._id))) {
             return res.status(404).json({
                 message: "User is not in the group"
@@ -177,8 +177,7 @@ const groupDeleteGroup = (req, res) => {
     groupSchema_1.default.deleteOne({ _id: groupId })
         .exec()
         .then((result) => res.status(200).json({
-        message: 'Group deleted',
-        result
+        message: 'Group deleted'
     }))
         .catch((err) => {
         console.log(err);

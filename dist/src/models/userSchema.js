@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = exports.userSchema = void 0;
 const tslib_1 = require("tslib");
 const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
-const userSchema = new mongoose_1.default.Schema({
+exports.userSchema = new mongoose_1.default.Schema({
     _id: mongoose_1.default.Schema.Types.ObjectId,
     firstName: {
         type: String,
@@ -31,5 +32,5 @@ const userSchema = new mongoose_1.default.Schema({
         required: true
     }
 });
-exports.default = mongoose_1.default.model('userSchema', userSchema);
+exports.User = mongoose_1.default.model('userSchema', exports.userSchema);
 //# sourceMappingURL=userSchema.js.map

@@ -1,7 +1,5 @@
-import { request } from 'express';
 import mongoose from 'mongoose'
 import { model, Document } from "mongoose";
-import bcrypt from 'bcrypt'
 
 export interface IUser extends Document{
     

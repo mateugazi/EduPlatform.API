@@ -16,7 +16,8 @@ export const getAllAnnouncements =  async (req:Request, res:Response) => {
 export const getAnnouncementById =  async (req:Request, res:Response) => {
   // #swagger.tags = ['Announcements']
   // #swagger.description = 'Endpoint to get an announcement by Id.'
-    /* #swagger.parameters['announcementId'] = {
+    /* #swagger.parameters['id'] = {
+      in: 'path',
     description: 'Id of the announcement'
   }
   */
@@ -86,7 +87,8 @@ export const updateAnnouncement =  async (req:Request, res:Response) => {
 export const deleteAnnouncement =  async (req:Request, res:Response) => {
       // #swagger.tags = ['Announcements']
       // #swagger.description = 'Endpoint to delete an announcement.'
-  /* #swagger.parameters['announcementId'] = {
+  /* #swagger.parameters['id'] = {
+      in: 'path',
     description: 'Id of the announcement'
   }
   */

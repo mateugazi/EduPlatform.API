@@ -884,8 +884,11 @@
             }
         },
         "/authorization/": {
+            "tags": [
+                "Authorization"
+            ],
             "get": {
-                "tags": ["Authorization"],
+                "tags": [],
                 "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",
                 "parameters": [],
                 "responses": {
@@ -900,7 +903,9 @@
         },
         "/authorization/login": {
             "post": {
-                "tags": ["Authorization"],
+                "tags": [
+                    "Authorization"
+                ],
                 "description": "Enable created user to login into the page. Returning JWT token.",
                 "parameters": [
                     {
@@ -929,7 +934,9 @@
         },
         "/authorization/register": {
             "post": {
-                "tags": ["Authorization"],
+                "tags": [
+                    "Authorization"
+                ],
                 "description": "Enable to create accounts in our application.",
                 "parameters": [
                     {
@@ -1030,13 +1037,8 @@
                         "name": "id",
                         "in": "path",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "announcementId",
-                        "description": "Id of the announcement",
-                        "in": "query",
-                        "type": "string"
+                        "type": "string",
+                        "description": "Id of the announcement"
                     }
                 ],
                 "responses": {
@@ -1120,13 +1122,8 @@
                         "name": "id",
                         "in": "path",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "announcementId",
-                        "description": "Id of the announcement",
-                        "in": "query",
-                        "type": "string"
+                        "type": "string",
+                        "description": "Id of the announcement"
                     }
                 ],
                 "responses": {

@@ -80,7 +80,7 @@
         "tags": [
           "Groups"
         ],
-        "description": "",
+        "description": "Endpoint to get one group.",
         "parameters": [
           {
             "name": "groupId",
@@ -134,7 +134,7 @@
         "tags": [
           "Groups"
         ],
-        "description": "",
+        "description": "Endpoint to create group.",
         "parameters": [
           {
             "name": "newGroup",
@@ -168,7 +168,7 @@
         "tags": [
           "Groups"
         ],
-        "description": "",
+        "description": "Endpoint to add one member to the group.",
         "parameters": [
           {
             "name": "groupId",
@@ -241,7 +241,7 @@
         "tags": [
           "Groups"
         ],
-        "description": "",
+        "description": "Endpoint to delete one member from the group.",
         "parameters": [
           {
             "name": "groupId",
@@ -314,7 +314,7 @@
         "tags": [
           "Groups"
         ],
-        "description": "",
+        "description": "Endpoint to change the name of the group.",
         "parameters": [
           {
             "name": "groupId",
@@ -372,7 +372,7 @@
         "tags": [
           "Groups"
         ],
-        "description": "",
+        "description": "Endpoint to delete the group.",
         "parameters": [
           {
             "name": "groupId",

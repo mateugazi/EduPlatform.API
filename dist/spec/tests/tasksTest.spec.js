@@ -122,7 +122,6 @@ describe('/tasks', () => {
             const project = new projectSchema_1.default(newProject);
             yield project.save();
             yield request.post('/').send(Object.assign(Object.assign({}, newTask), { projectId: project._id }));
-            console.log(project._id);
             const response = yield request.get('/project/' + project._id);
             expect(response.status).toEqual(200);
             expect(response.body.length).toEqual(1);
@@ -273,7 +272,9 @@ describe('/tasks', () => {
         it('with Project Id', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
             const project = new projectSchema_1.default(newProject);
             yield project.save();
-            const response = yield request.post('/').send(Object.assign(Object.assign({}, newTask), { projectId: project._id }));
+            const task = newTask;
+            task.projectId = project._id;
+            const response = yield request.post('/').send(task);
             expect(response.status).toEqual(200);
             expect(response.body.project.title).toBe(newProject.title);
             expect(response.body.project.description).toBe(newProject.description);
@@ -281,7 +282,7 @@ describe('/tasks', () => {
         }));
         it('throw error - project id is invalid', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
             const response = yield request.post('/').send(Object.assign(Object.assign({}, newTask), { projectId: '6043cf5' }));
-            expect(response.status).toEqual(500);
+            expect(response.status).toEqual(400);
             done();
         }));
     });

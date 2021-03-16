@@ -55,42 +55,6 @@
         "application/json"
     ],
     "paths": {
-        "/sample/sampleRoute": {
-            "post": {
-                "tags": [],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "obj",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "name": {
-                                    "type": "string",
-                                    "example": "any"
-                                },
-                                "value": {
-                                    "type": "string",
-                                    "example": "any"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "201": {
-                        "description": "Created"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
         "/group/": {
             "get": {
                 "tags": [
@@ -116,7 +80,7 @@
                 "tags": [
                     "Groups"
                 ],
-                "description": "",
+                "description": "Endpoint to get one group.",
                 "parameters": [
                     {
                         "name": "groupId",
@@ -170,7 +134,7 @@
                 "tags": [
                     "Groups"
                 ],
-                "description": "",
+                "description": "Endpoint to create group.",
                 "parameters": [
                     {
                         "name": "newGroup",
@@ -204,7 +168,7 @@
                 "tags": [
                     "Groups"
                 ],
-                "description": "",
+                "description": "Endpoint to add one member to the group.",
                 "parameters": [
                     {
                         "name": "groupId",
@@ -277,7 +241,7 @@
                 "tags": [
                     "Groups"
                 ],
-                "description": "",
+                "description": "Endpoint to delete one member from the group.",
                 "parameters": [
                     {
                         "name": "groupId",
@@ -350,7 +314,7 @@
                 "tags": [
                     "Groups"
                 ],
-                "description": "",
+                "description": "Endpoint to change the name of the group.",
                 "parameters": [
                     {
                         "name": "groupId",
@@ -408,7 +372,7 @@
                 "tags": [
                     "Groups"
                 ],
-                "description": "",
+                "description": "Endpoint to delete the group.",
                 "parameters": [
                     {
                         "name": "groupId",
@@ -454,7 +418,9 @@
         },
         "/projects": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Projects"
+                ],
                 "description": "",
                 "parameters": [],
                 "responses": {
@@ -467,7 +433,9 @@
                 }
             },
             "post": {
-                "tags": [],
+                "tags": [
+                    "Projects"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -522,7 +490,9 @@
         },
         "/projects/{projectId}": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Projects"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -548,7 +518,9 @@
                 }
             },
             "put": {
-                "tags": [],
+                "tags": [
+                    "Projects"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -611,7 +583,9 @@
                 }
             },
             "delete": {
-                "tags": [],
+                "tags": [
+                    "Projects"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -639,7 +613,9 @@
         },
         "/tasks/": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Tasks"
+                ],
                 "description": "",
                 "parameters": [],
                 "responses": {
@@ -652,7 +628,9 @@
                 }
             },
             "post": {
-                "tags": [],
+                "tags": [
+                    "Tasks"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -689,6 +667,9 @@
                     "200": {
                         "description": "OK"
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "500": {
                         "description": "Internal Server Error"
                     }
@@ -697,7 +678,9 @@
         },
         "/tasks/{id}": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Tasks"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -723,7 +706,9 @@
                 }
             },
             "put": {
-                "tags": [],
+                "tags": [
+                    "Tasks"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -750,7 +735,7 @@
                                     "type": "string",
                                     "example": "any"
                                 },
-                                "done": {
+                                "done\r": {
                                     "type": "string",
                                     "example": "any"
                                 }
@@ -774,7 +759,9 @@
                 }
             },
             "delete": {
-                "tags": [],
+                "tags": [
+                    "Tasks"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -802,7 +789,9 @@
         },
         "/tasks/project/{id}": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Tasks"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -830,7 +819,9 @@
         },
         "/tasks/user/{id}": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Tasks"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -858,7 +849,9 @@
         },
         "/tasks/project/{projectId}/user/{userId}": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Tasks"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -892,7 +885,9 @@
         },
         "/authorization/": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Authorization"
+                ],
                 "description": "",
                 "parameters": [],
                 "responses": {
@@ -904,7 +899,9 @@
         },
         "/authorization/login": {
             "post": {
-                "tags": [],
+                "tags": [
+                    "Authorization"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -925,7 +922,9 @@
         },
         "/authorization/register": {
             "post": {
-                "tags": [],
+                "tags": [
+                    "Authorization"
+                ],
                 "description": "",
                 "parameters": [],
                 "responses": {
@@ -937,7 +936,9 @@
         },
         "/announcements/": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Announcements"
+                ],
                 "description": "",
                 "parameters": [],
                 "responses": {
@@ -947,7 +948,9 @@
                 }
             },
             "post": {
-                "tags": [],
+                "tags": [
+                    "Announcements"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -984,7 +987,9 @@
         },
         "/announcements/{id}": {
             "get": {
-                "tags": [],
+                "tags": [
+                    "Announcements"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -1004,7 +1009,9 @@
                 }
             },
             "patch": {
-                "tags": [],
+                "tags": [
+                    "Announcements"
+                ],
                 "description": "",
                 "parameters": [
                     {
@@ -1027,7 +1034,9 @@
                 }
             },
             "delete": {
-                "tags": [],
+                "tags": [
+                    "Announcements"
+                ],
                 "description": "",
                 "parameters": [
                     {

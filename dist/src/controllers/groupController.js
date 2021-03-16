@@ -177,8 +177,7 @@ const groupDeleteGroup = (req, res) => {
     groupSchema_1.default.deleteOne({ _id: groupId })
         .exec()
         .then((result) => res.status(200).json({
-        message: 'Group deleted',
-        result
+        message: 'Group deleted'
     }))
         .catch((err) => {
         console.log(err);

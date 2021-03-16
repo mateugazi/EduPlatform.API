@@ -97,6 +97,12 @@ const AddTask = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function
     try {
         let task;
         if (req.body.projectId && req.body.userId) {
+            if (!mongoose_1.Types.ObjectId.isValid(req.body.projectId)) {
+                return res.status(400).send('Project Id is not valid');
+            }
+            if (!mongoose_1.Types.ObjectId.isValid(req.body.userId)) {
+                return res.status(400).send('User Id is not valid');
+            }
             const project = yield projectSchema_1.default.findById(req.body.projectId);
             const user = yield userSchema_1.default.findById(req.body.userId);
             task = new tasksSchema_1.Task({
@@ -110,6 +116,9 @@ const AddTask = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function
             });
         }
         else if (req.body.projectId) {
+            if (!mongoose_1.Types.ObjectId.isValid(req.body.projectId)) {
+                return res.status(400).send('Project Id is not valid');
+            }
             const project = yield projectSchema_1.default.findById(req.body.projectId);
             task = new tasksSchema_1.Task({
                 _id: new mongoose_1.Types.ObjectId(),
@@ -121,6 +130,9 @@ const AddTask = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function
             });
         }
         else if (req.body.userId) {
+            if (!mongoose_1.Types.ObjectId.isValid(req.body.userId)) {
+                return res.status(400).send('User Id is not valid');
+            }
             const user = yield userSchema_1.default.findById(req.body.userId);
             task = new tasksSchema_1.Task({
                 _id: new mongoose_1.Types.ObjectId(),
@@ -159,7 +171,7 @@ const UpdateTask = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, funct
         name: req.body.name,
         description: req.body.description,
         deadline: req.body.deadline,
-        done: req.body.done,
+        done: req.body.done
     };
     try {
         const task = yield tasksSchema_1.Task.findByIdAndUpdate(req.params.id, taskData, { new: true });

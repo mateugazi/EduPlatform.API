@@ -1,279 +1,507 @@
+---
 swagger: '2.0'
 info:
-  version: '1.0.0'
+  version: 1.0.0
   title: EduPlatform.API
+  description: This is API for EduPlatform
 host: localhost:3000
-basePath: /
+basePath: "/"
+tags: []
 schemes:
-  - http
+- http
+- https
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: https://petstore.swagger.io/oauth/authorize
+    flow: implicit
+    scopes:
+      read_pets: read your pets
+      write_pets: modify pets in your account
 consumes:
-  - application/json
+- application/json
 produces:
-  - application/json
+- application/json
 paths:
-  /group:
-    get:
-      summary: Get all the groups
-      responses:
-        '200':
-          description: Object with all groups.
-          schema:
-            type: object
-            properties:
-              numberOfGroups:
-                type: integer
-                example: 1
-              result:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    _id:
-                      type: string
-                    groupName:
-                      type: string
-                    mentor:
-                      type: string
-                    members:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          _id: 
-                            type: string
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-  /group/{groupId}:
-    get:
-      summary: Get a single group
-      parameters:
-        - in: path
-          name: groupId
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Object with a single group
-          schema:
-            type: object
-            properties:
-             group:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    _id:
-                      type: string
-                    groupName:
-                      type: string
-                    mentor:
-                      type: string
-                    members:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          _id: 
-                            type: string
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-  /group/createGroup:
+  "/sample/sampleRoute":
     post:
-      summary: Create a group
+      tags: []
+      description: ''
       parameters:
-        - name: groupBody
-          in: body
-          description: Object with mentor's _id and groupName
-          schema:
-            type: object
-            required: 
-              - mentor
-              - groupName
-            properties:
-              mentor:
-                type: string
-              groupName:
-                type: string
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: any
+            value:
+              type: string
+              example: any
       responses:
+        '200':
+          description: OK
         '201':
-          description: Group created
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Group created
-        '404':
-          description: This group name is already taken
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: This group name is already taken
+          description: Created sgdgsdgsdf
         '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-  /group/addMember/{groupId}:
-    put:
-      summary: Add a member to the group
+          description: Internal Server Error
+  "/group/createGroup":
+    post:
+      tags: []
+      description: ''
       parameters:
-        - name: groupId
-          in: path
-          type: string
-          required: true
-        - name: userBody
-          in: body
-          required: true
-          schema:
-            type: object
-            required:
-              - _id
-            properties:
-              _id:
-                type: string
-                description: User's id
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            mentor:
+              type: string
+              example: any
+            groupName:
+              type: string
+              example: any
       responses:
         '200':
-          description: User added
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: User added
-              member:
-                type: object
+          description: OK
+        '201':
+          description: Created
         '404':
-          description: User is already in the group
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: User is already in the group
+          description: Not Found
         '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-  /group/deleteMember/{groupId}:
-    put:
-      summary: Delete a member from the group
-      parameters:
-        - name: groupId
-          in: path
-          type: string
-          required: true
-        - name: userBody
-          in: body
-          required: true
-          schema:
-            type: object
-            required:
-              - _id
-            properties:
-              _id:
-                type: string
+          description: Internal Server Error
+  "/group/":
+    get:
+      tags: []
+      description: ''
+      parameters: []
       responses:
         '200':
-          description: User deleted from the group
-          schema: 
-            type: object
-            properties:
-              message: 
-                type: string
-                example: User deleted
-              result:
-                type: object
-        '404':
-          description: User is not in the group
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: User is not in the group
+          description: OK
         '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-  /group/changeName/{groupId}:
-    put:
-      summary: Change a group name
+          description: Internal Server Error
+  "/group/{groupId}":
+    get:
+      tags: []
+      description: ''
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          type: string
-        - name: nameBody
-          in: body
-          required: true
-          schema:
-            type: object
-            required:
-              - newName
-            properties:
-              newName:
-                type: string
+      - name: groupId
+        in: path
+        required: true
+        type: string
       responses:
         '200':
-          description: Group's name changed
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Group's name changed
+          description: OK
+        '404':
+          description: Not Found
         '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-  /group/deleteGroup/{groupId}:
+          description: Internal Server Error
+  "/group/addMember/{groupId}":
+    put:
+      tags: []
+      description: ''
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        type: string
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: any
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/group/deleteMember/{groupId}":
+    put:
+      tags: []
+      description: ''
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        type: string
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: any
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/group/changeName/{groupId}":
+    put:
+      tags: []
+      description: ''
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        type: string
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            newName:
+              type: string
+              example: any
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal Server Error
+  "/group/deleteGroup/{groupId}":
     delete:
-      summary: Delete a group
+      tags: []
+      description: ''
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          type: string
+      - name: groupId
+        in: path
+        required: true
+        type: string
       responses:
         '200':
-          description: Groupd deleted
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Group deleted
-              result:
-                type: object
+          description: OK
         '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
+          description: Internal Server Error
+  "/projects":
+    get:
+      tags: []
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal Server Error
+    post:
+      tags: []
+      description: ''
+      parameters:
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            mentor:
+              type: string
+              example: any
+            ? "authors\r"
+            : type: string
+              example: any
+            title:
+              type: string
+              example: any
+            description:
+              type: string
+              example: any
+            linkToDemo:
+              type: string
+              example: any
+            linkToGitHub:
+              type: string
+              example: any
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/projects/{projectId}":
+    get:
+      tags: []
+      description: ''
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    put:
+      tags: []
+      description: ''
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        type: string
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+              example: any
+            description:
+              type: string
+              example: any
+            mentor:
+              type: string
+              example: any
+            authors:
+              type: string
+              example: any
+            linkToDemo:
+              type: string
+              example: any
+            linkToGitHub:
+              type: string
+              example: any
+            ? "authors\r"
+            : type: string
+              example: any
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags: []
+      description: ''
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/tasks/":
+    get:
+      tags: []
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: []
+      description: ''
+      parameters:
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            projectId:
+              type: string
+              example: any
+            name:
+              type: string
+              example: any
+            description:
+              type: string
+              example: any
+            deadline:
+              type: string
+              example: any
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+  "/tasks/{id}":
+    get:
+      tags: []
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+    put:
+      tags: []
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: obj
+        in: body
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: any
+            description:
+              type: string
+              example: any
+            deadline:
+              type: string
+              example: any
+            done:
+              type: string
+              example: any
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+    delete:
+      tags: []
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+  "/tasks/project/{id}":
+    get:
+      tags: []
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+  "/authorization/":
+    get:
+      tags: []
+      description: Shows all data to.
+      parameters: []
+      responses:
+        '200':
+          description: OK
+  "/authorization/login":
+    post:
+      tags: []
+      description: ''
+      parameters:
+      - name: password
+        in: query
+        type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  "/authorization/register":
+    post:
+      tags: []
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+  "/announcements/":
+    get:
+      tags: []
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: []
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+  "/announcements/{id}":
+    get:
+      tags: []
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags: []
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: []
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+definitions: {}

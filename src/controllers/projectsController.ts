@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import {Types} from 'mongoose';
 import Project from '../models/projectSchema';
-import User from '../models/userSchema';
+import {User} from '../models/userSchema';
 
 exports.projects_get_all = (req: Request, res: Response) => {
     Project

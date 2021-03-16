@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import groupSchema from '../models/groupSchema';
-import userSchema from '../models/userSchema';
+import { userSchema, User } from '../models/userSchema';
 
 export const groupCreateGroup = async (req: Request, res: Response) => {
   // #swagger.tags = ['Groups']
@@ -14,7 +14,7 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
   }
   */
   try {
-  const userMentor = await userSchema.findById(req.body.mentor)
+  const userMentor = await User.findById(req.body.mentor)
       const groupName = await groupSchema.findOne({ groupName: req.body.groupName })
       if (groupName) {
         res.status(404).json({
@@ -143,7 +143,7 @@ export const groupAddMember = async (req: Request, res: Response) => {
   */
   const groupId = req.params.groupId
   try {
-    const member: any = await userSchema.findById(req.body._id)
+    const member: any = await User.findById(req.body._id)
     const group: any = await groupSchema.findById(groupId)
     if (group.members.some( (obj: {_id: String}) => member._id.equals(obj._id))) {
       return res.status(404).json({
@@ -205,7 +205,7 @@ export const groupDeleteMember = async (req: Request, res: Response) => {
   const groupId = req.params.groupId
   try {
     const group: any = await groupSchema.findById(groupId)
-    const member: any = await userSchema.findById(req.body._id)
+    const member: any = await User.findById(req.body._id)
     if (!group.members.some( (obj: {_id: String}) => member._id.equals(obj._id))) {
       return res.status(404).json({
         message: "User is not in the group"

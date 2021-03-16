@@ -885,25 +885,29 @@
     },
     "/authorization/": {
       "get": {
-        "tags": [
-          "Authorization"
-        ],
-        "description": "",
+        "tags": [],
+        "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",
         "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/authorization/login": {
       "post": {
-        "tags": [
-          "Authorization"
-        ],
-        "description": "",
+        "tags": [],
+        "description": "Enable created user to login into the page. Returning JWT token.",
         "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "type": "string"
+          },
           {
             "name": "password",
             "in": "query",
@@ -925,14 +929,46 @@
     },
     "/authorization/register": {
       "post": {
-        "tags": [
-          "Authorization"
+        "tags": [],
+        "description": "Enable to create accounts in our application.",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "type": "string"
+          }
         ],
-        "description": "",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description":"Bad Request"
           }
         }
       }

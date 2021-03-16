@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
 const tasksSchema_1 = require("../../src/models/tasksSchema");
 const projectSchema_1 = tslib_1.__importDefault(require("../../src/models/projectSchema"));
-const userSchema_1 = tslib_1.__importDefault(require("../../src/models/userSchema"));
+const userSchema_1 = require("../../src/models/userSchema");
 const tasksRouter_1 = tslib_1.__importDefault(require("../../src/routes/tasksRouter"));
 const express_1 = tslib_1.__importDefault(require("express"));
 const body_parser_1 = require("body-parser");
@@ -60,7 +60,7 @@ describe('/tasks', () => {
     afterEach(() => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
         yield tasksSchema_1.Task.deleteMany();
         yield projectSchema_1.default.deleteMany();
-        yield userSchema_1.default.deleteMany();
+        yield userSchema_1.User.deleteMany();
     }));
     describe('create user successfully', () => {
         const task = new tasksSchema_1.Task(newTask);
@@ -155,7 +155,7 @@ describe('/tasks', () => {
     });
     describe('GET /user/:id', () => {
         it('with correct User Id', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-            const user = new userSchema_1.default(newUser);
+            const user = new userSchema_1.User(newUser);
             yield user.save();
             yield request.post('/').send(Object.assign(Object.assign({}, newTask), { userId: user._id }));
             const response = yield request.get('/user/' + user._id);
@@ -169,7 +169,7 @@ describe('/tasks', () => {
             done();
         }));
         it('with lack of task for user ID', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-            const user = new userSchema_1.default(newUser);
+            const user = new userSchema_1.User(newUser);
             yield user.save();
             const response = yield request.get('/user/' + user._id);
             expect(response.status).toEqual(404);

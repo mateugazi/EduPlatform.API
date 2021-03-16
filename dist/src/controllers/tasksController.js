@@ -5,7 +5,7 @@ const tslib_1 = require("tslib");
 const mongoose_1 = require("mongoose");
 const tasksSchema_1 = require("../models/tasksSchema");
 const projectSchema_1 = tslib_1.__importDefault(require("../models/projectSchema"));
-const userSchema_1 = tslib_1.__importDefault(require("../models/userSchema"));
+const userSchema_1 = require("../models/userSchema");
 const AllTasks = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     try {
         const tasksList = yield tasksSchema_1.Task.find();
@@ -104,7 +104,7 @@ const AddTask = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function
                 return res.status(400).send('User Id is not valid');
             }
             const project = yield projectSchema_1.default.findById(req.body.projectId);
-            const user = yield userSchema_1.default.findById(req.body.userId);
+            const user = yield userSchema_1.User.findById(req.body.userId);
             task = new tasksSchema_1.Task({
                 _id: new mongoose_1.Types.ObjectId(),
                 name: req.body.name,
@@ -133,7 +133,7 @@ const AddTask = (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function
             if (!mongoose_1.Types.ObjectId.isValid(req.body.userId)) {
                 return res.status(400).send('User Id is not valid');
             }
-            const user = yield userSchema_1.default.findById(req.body.userId);
+            const user = yield userSchema_1.User.findById(req.body.userId);
             task = new tasksSchema_1.Task({
                 _id: new mongoose_1.Types.ObjectId(),
                 name: req.body.name,

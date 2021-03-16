@@ -884,11 +884,10 @@
       }
     },
     "/authorization/": {
-      "tags": [
-        "Authorization"
-      ],
       "get": {
-        "tags": [],
+        "tags": [
+          "Authorization"
+        ],
         "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",
         "parameters": [],
         "responses": {

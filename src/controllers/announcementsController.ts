@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose, { Types } from 'mongoose';
-import { Announcement } from '../models/announcementSchema';
+import Announcement from '../models/announcementSchema';
 
 export const getAllAnnouncements =  async (req:Request, res:Response) => {
   res.send(await Announcement.find())
@@ -28,9 +28,12 @@ export const updateAnnouncement =  async (req:Request, res:Response) => {
 }
 
 export const deleteAnnouncement =  async (req:Request, res:Response) => {
-  Types.ObjectId.isValid(req.params.id) ? null : res.status(400).send('Given id is not valid')
-  const announcement = await Announcement.findByIdAndRemove(req.params.id)
+  if(!Types.ObjectId.isValid(req.params.id))
+  {
+    return res.status(400).send('Given id is not valid')
+  }
 
+  const announcement = await Announcement.findByIdAndRemove(req.params.id)
   !announcement ? res.status(404).send('There is no announcement with given id') : res.status(204).send(announcement)
 }
 

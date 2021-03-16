@@ -1,4 +1,6 @@
 import {model, Schema, Document, Types} from 'mongoose';
+import mongoose from 'mongoose';
+
 
 
 export interface IAnnouncement extends Document{
@@ -28,4 +30,4 @@ export const announcementSchema = new Schema<IAnnouncement>( {
     }  
 });
 
-export const Announcement = model('Announcement', announcementSchema);
+export default mongoose.model('announcementSchema', announcementSchema);

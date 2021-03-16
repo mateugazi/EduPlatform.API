@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import {Task} from '../../src/models/tasksSchema';
 import Project from '../../src/models/projectSchema';
-import User from '../../src/models/userSchema';
+import {User} from '../../src/models/userSchema';
 import tasksRouter from '../../src/routes/tasksRouter';
 import express from 'express';
 import {json, urlencoded} from 'body-parser';

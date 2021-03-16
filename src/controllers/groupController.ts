@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import groupSchema from '../models/groupSchema';
-import userSchema from '../models/userSchema';
+import { userSchema, User } from '../models/userSchema';
 
 export const groupCreateGroup = async (req: Request, res: Response) => {
   // #swagger.tags = ['Groups']
+      // #swagger.description = 'Endpoint to create group.'
+
   /* #swagger.parameters['newGroup'] = {
     in: 'body',
     description: 'Create a new group',
@@ -14,7 +16,7 @@ export const groupCreateGroup = async (req: Request, res: Response) => {
   }
   */
   try {
-  const userMentor = await userSchema.findById(req.body.mentor)
+  const userMentor = await User.findById(req.body.mentor)
       const groupName = await groupSchema.findOne({ groupName: req.body.groupName })
       if (groupName) {
         res.status(404).json({
@@ -73,6 +75,8 @@ export const groupGetAllGroup = (req: Request, res: Response) => {
 
 export const groupGetSingleGroup = (req: Request, res: Response) => {
   // #swagger.tags = ['Groups']
+      // #swagger.description = 'Endpoint to get one group.'
+
   /* #swagger.responses[200] = {
       schema: { $ref: "#/definitions/group" } 
     }
@@ -113,6 +117,8 @@ export const groupGetSingleGroup = (req: Request, res: Response) => {
 
 export const groupAddMember = async (req: Request, res: Response) => {
     // #swagger.tags = ['Groups']
+          // #swagger.description = 'Endpoint to add one member to the group.'
+
     /* #swagger.parameters['_id'] = {
     in: 'body',
     description: 'Id of user',
@@ -143,7 +149,7 @@ export const groupAddMember = async (req: Request, res: Response) => {
   */
   const groupId = req.params.groupId
   try {
-    const member: any = await userSchema.findById(req.body._id)
+    const member: any = await User.findById(req.body._id)
     const group: any = await groupSchema.findById(groupId)
     if (group.members.some( (obj: {_id: String}) => member._id.equals(obj._id))) {
       return res.status(404).json({
@@ -175,6 +181,8 @@ export const groupAddMember = async (req: Request, res: Response) => {
 
 export const groupDeleteMember = async (req: Request, res: Response) => {
     // #swagger.tags = ['Groups']
+              // #swagger.description = 'Endpoint to delete one member from the group.'
+
   /* #swagger.parameters['_id'] = {
     in: 'body',
     description: 'Id of user',
@@ -205,7 +213,7 @@ export const groupDeleteMember = async (req: Request, res: Response) => {
   const groupId = req.params.groupId
   try {
     const group: any = await groupSchema.findById(groupId)
-    const member: any = await userSchema.findById(req.body._id)
+    const member: any = await User.findById(req.body._id)
     if (!group.members.some( (obj: {_id: String}) => member._id.equals(obj._id))) {
       return res.status(404).json({
         message: "User is not in the group"
@@ -240,6 +248,8 @@ export const groupDeleteMember = async (req: Request, res: Response) => {
 
 export const groupChangeName = async(req: Request, res: Response) => {
     // #swagger.tags = ['Groups']
+                  // #swagger.description = 'Endpoint to change the name of the group.'
+
   /* #swagger.parameters['newName'] = {
     in: 'body',
     description: 'New name of the group.',
@@ -278,6 +288,8 @@ export const groupChangeName = async(req: Request, res: Response) => {
 
 export const groupDeleteGroup = (req: Request, res: Response) => {
     // #swagger.tags = ['Groups']
+                      // #swagger.description = 'Endpoint to delete the group.'
+
   /* #swagger.parameters['groupId'] = {
     description: 'Id of the group'
   }
@@ -300,8 +312,7 @@ export const groupDeleteGroup = (req: Request, res: Response) => {
     groupSchema.deleteOne({ _id: groupId})
     .exec()
     .then((result: any) => res.status(200).json({
-      message: 'Group deleted',
-      result
+      message: 'Group deleted'
     }))
     .catch((err: any) => {
       console.log(err)

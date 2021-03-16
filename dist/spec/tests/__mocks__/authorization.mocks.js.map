@@ -1,0 +1,1 @@
+{"version":3,"file":"authorization.mocks.js","sourceRoot":"","sources":["../../../../spec/tests/__mocks__/authorization.mocks.ts"],"names":[],"mappings":";;;AAAa,QAAA,aAAa,GAAI;IAC1B,KAAK,EAAE,0BAA0B;IACjC,WAAW,EAAE,OAAO;IACpB,UAAU,EAAE,OAAO;IACnB,OAAO,EAAE,uBAAuB;IAChC,UAAU,EAAE,8DAA8D;IAC1E,OAAO,EAAE,aAAa;IACtB,MAAM,EAAE,MAAM;IACd,KAAK,EAAE,CAAC;CACX,CAAA"}

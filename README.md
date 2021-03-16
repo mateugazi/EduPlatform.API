@@ -65,6 +65,14 @@ The sample .ts files in the following folders are temporary, just to help you wi
 
 The docs for group management were build with swagger ui and can be found at adress https://eduplatformapi.herokuapp.com/doc
 
+## Announcements
+
+The docs for announcements were build with swagger ui and can be found at adress https://eduplatformapi.herokuapp.com/doc
+
+## Authorization
+
+The docs for authorization were build with swagger ui and can be found at adress https://eduplatformapi.herokuapp.com/doc
+
 ## Projects
 
 ### GET `/projects`

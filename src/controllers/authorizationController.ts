@@ -19,6 +19,8 @@ const isValidPassword = (db_password: any, password: any): boolean => {
 
 // Sprawdzanie dostepnych uzytkownikow w bazie
 export const ShowAll = (request: Request, response:Response): void => {
+              // #swagger.tags = ['Authorization']
+
     mongoose.connection.db.collection("users", function(err: MongoError, collection: Collection){
         collection.find({}).toArray(function(err: MongoError, data: any[]){
             response.status(200).send(data)
@@ -27,6 +29,8 @@ export const ShowAll = (request: Request, response:Response): void => {
 }
 
 export const LogIn = (request: Request, response:Response) => { 
+              // #swagger.tags = ['Authorization']
+
     mongoose.connection.db.collection("users", function (err: MongoError, collection: Collection) {       
         collection.findOne(checkLoginForm(request.query), function (err: MongoError, data: IUser) {    
 
@@ -48,6 +52,8 @@ export const LogIn = (request: Request, response:Response) => {
 }
 
 export const Register = (request: Request, response: Response): void => {
+              // #swagger.tags = ['Authorization']
+
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
         firstName: request.query.firstName,

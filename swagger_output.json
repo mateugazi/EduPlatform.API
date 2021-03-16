@@ -418,7 +418,9 @@
     },
     "/projects": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Projects"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
@@ -431,7 +433,9 @@
         }
       },
       "post": {
-        "tags": [],
+        "tags": [
+          "Projects"
+        ],
         "description": "",
         "parameters": [
           {
@@ -486,7 +490,9 @@
     },
     "/projects/{projectId}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Projects"
+        ],
         "description": "",
         "parameters": [
           {
@@ -512,7 +518,9 @@
         }
       },
       "put": {
-        "tags": [],
+        "tags": [
+          "Projects"
+        ],
         "description": "",
         "parameters": [
           {
@@ -575,7 +583,9 @@
         }
       },
       "delete": {
-        "tags": [],
+        "tags": [
+          "Projects"
+        ],
         "description": "",
         "parameters": [
           {
@@ -603,7 +613,9 @@
     },
     "/tasks/": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Tasks"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
@@ -616,7 +628,9 @@
         }
       },
       "post": {
-        "tags": [],
+        "tags": [
+          "Tasks"
+        ],
         "description": "",
         "parameters": [
           {
@@ -664,7 +678,9 @@
     },
     "/tasks/{id}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Tasks"
+        ],
         "description": "",
         "parameters": [
           {
@@ -690,7 +706,9 @@
         }
       },
       "put": {
-        "tags": [],
+        "tags": [
+          "Tasks"
+        ],
         "description": "",
         "parameters": [
           {
@@ -741,7 +759,9 @@
         }
       },
       "delete": {
-        "tags": [],
+        "tags": [
+          "Tasks"
+        ],
         "description": "",
         "parameters": [
           {
@@ -769,7 +789,9 @@
     },
     "/tasks/project/{id}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Tasks"
+        ],
         "description": "",
         "parameters": [
           {
@@ -797,7 +819,9 @@
     },
     "/tasks/user/{id}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Tasks"
+        ],
         "description": "",
         "parameters": [
           {
@@ -825,7 +849,9 @@
     },
     "/tasks/project/{projectId}/user/{userId}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Tasks"
+        ],
         "description": "",
         "parameters": [
           {
@@ -859,7 +885,9 @@
     },
     "/authorization/": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Authorization"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
@@ -871,7 +899,9 @@
     },
     "/authorization/login": {
       "post": {
-        "tags": [],
+        "tags": [
+          "Authorization"
+        ],
         "description": "",
         "parameters": [
           {
@@ -892,7 +922,9 @@
     },
     "/authorization/register": {
       "post": {
-        "tags": [],
+        "tags": [
+          "Authorization"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
@@ -904,7 +936,9 @@
     },
     "/announcements/": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Announcements"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
@@ -914,7 +948,9 @@
         }
       },
       "post": {
-        "tags": [],
+        "tags": [
+          "Announcements"
+        ],
         "description": "",
         "parameters": [
           {
@@ -951,7 +987,9 @@
     },
     "/announcements/{id}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Announcements"
+        ],
         "description": "",
         "parameters": [
           {
@@ -971,7 +1009,9 @@
         }
       },
       "patch": {
-        "tags": [],
+        "tags": [
+          "Announcements"
+        ],
         "description": "",
         "parameters": [
           {
@@ -994,7 +1034,9 @@
         }
       },
       "delete": {
-        "tags": [],
+        "tags": [
+          "Announcements"
+        ],
         "description": "",
         "parameters": [
           {

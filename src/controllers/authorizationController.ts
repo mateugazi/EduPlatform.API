@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {User, IUser} from "../models/authorizationSchema";
+import {User, IUser} from "../models/userSchema";
 import mongoose from "mongoose";
 import {MongoError, Collection} from "MongoDB";
 import bcrypt from "bcrypt";
@@ -19,10 +19,9 @@ export const isValidPassword = (db_password: any, password: any): boolean => {
 }
 
 // Sprawdzanie dostepnych uzytkownikow w bazie
-export const ShowAll = (request: Request, response:Response): void => {
-              // #swagger.tags = ['Authorization']
-
-    mongoose.connection.db.collection("users", function(err: MongoError, collection: Collection){
+export const ShowAll = (request: Request, response: Response): void => {
+    // #swagger.tags = ['Authorization']
+    mongoose.connection.db.collection("userschemas", function(err: MongoError, collection: Collection){
         if(err) {
             response.status(400).send(err);
         } else {
@@ -34,9 +33,8 @@ export const ShowAll = (request: Request, response:Response): void => {
 }
 
 export const LogIn = (request: Request, response: Response) => { 
-                  // #swagger.tags = ['Authorization']
-
-    mongoose.connection.db.collection("users", function (err: MongoError, collection: Collection) {
+    // #swagger.tags = ['Authorization']
+    mongoose.connection.db.collection("userschemas", function (err: MongoError, collection: Collection) {
         if(err) {
             response.status(400).send(err);
         } else {

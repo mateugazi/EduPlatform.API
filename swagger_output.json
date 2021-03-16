@@ -885,7 +885,7 @@
     },
     "/authorization/": {
       "get": {
-        "tags": [],
+        "tags": ["Authorization"],
         "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",
         "parameters": [],
         "responses": {
@@ -900,7 +900,7 @@
     },
     "/authorization/login": {
       "post": {
-        "tags": [],
+        "tags": ["Authorization"],
         "description": "Enable created user to login into the page. Returning JWT token.",
         "parameters": [
           {
@@ -929,7 +929,7 @@
     },
     "/authorization/register": {
       "post": {
-        "tags": [],
+        "tags": ["Authorization"],
         "description": "Enable to create accounts in our application.",
         "parameters": [
           {

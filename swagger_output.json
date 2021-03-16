@@ -689,6 +689,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -750,7 +753,7 @@
                   "type": "string",
                   "example": "any"
                 },
-                "done": {
+                "done\r": {
                   "type": "string",
                   "example": "any"
                 }

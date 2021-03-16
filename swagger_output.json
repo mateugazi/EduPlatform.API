@@ -547,10 +547,6 @@
                   "type": "string",
                   "example": "any"
                 },
-                "authors": {
-                  "type": "string",
-                  "example": "any"
-                },
                 "linkToDemo": {
                   "type": "string",
                   "example": "any"

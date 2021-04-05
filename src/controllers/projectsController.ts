@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import {Types} from 'mongoose';
 import Project from '../models/projectSchema';
-import {User} from '../models/userSchema';
+import Group from '../models/groupSchema';
 
 exports.projects_get_all = (req: Request, res: Response) => {
               // #swagger.tags = ['Projects']
@@ -47,20 +47,14 @@ exports.projects_get_single = (req: Request, res: Response) => {
 exports.projects_add_new_project = async (req: Request, res: Response) => {
                   // #swagger.tags = ['Projects']
 
-    const userMentor = await User.findById(req.body.mentor).catch((err: any) => res.status(404).send('Mentor id is not valid'))
-    if (!userMentor) res.status(404).send('Mentor not found')
-    const authorsArray = await req.body.authors
-    const userAuthors = await authorsArray.map( async (author: string) => {
-        const user = await User.findById(author).catch( () => res.status(404).send('Author id is not valid'))
-        if (!user) res.status(404).send('Mentor not found')
-        return user
-    })
+    const group = await Group.findById(req.body.group).catch((err: any) => res.status(404).send('Group id is not valid'))
+    if (!group) res.status(404).send('Group not found')
+
     const newProject = new Project({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
         description: req.body.description,
-        mentor: userMentor,
-        authors: userAuthors,
+        group: group,
         linkToDemo: req.body.linkToDemo,
         linkToGitHub: req.body.linkToGitHub,
         timestamp: Date.now(),
@@ -84,21 +78,14 @@ exports.projects_update_project = async (req: Request, res: Response) => {
 
     Types.ObjectId.isValid(req.params.projectId) ? null : res.status(400).send('Id is not valid')
     
-    if (!req.body.title || !req.body.description || !req.body.mentor || !req.body.authors || !req.body.linkToDemo || !req.body.linkToGitHub) res.status(400).send('Missing parameter')
-    const userMentor = User.findById(req.body.mentor).catch((err: any) => res.status(404).send('Mentor id is not valid'))
-    if (!userMentor) res.status(404).send('Mentor not found')
-    const authorsArray = await req.body.authors
-    const userAuthors = await authorsArray.map( async (author: string) => {
-        const user = await User.findById(author).catch( () => res.status(404).send('Author id is not valid'))
-        if (!user) res.status(404).send('Mentor not found')
-        return user
-    })
+    if (!req.body.title || !req.body.description || !req.body.group  || !req.body.linkToDemo || !req.body.linkToGitHub) res.status(400).send('Missing parameter')
+    const group = await Group.findById(req.body.group).catch((err: any) => res.status(404).send('Group id is not valid'))
+    if (!group) res.status(404).send('Group not found')
 
     const projectData = await {
         title: req.body.title,
         description: req.body.description,
-        mentor: req.body.mentor,
-        authors: userAuthors,
+        group: group,
         linkToDemo: req.body.linkToDemo,
         linkToGitHub: req.body.linkToGitHub,
         timestamp: Date.now()
@@ -112,7 +99,6 @@ exports.projects_update_project = async (req: Request, res: Response) => {
             })
         })
         .catch( (error: any) => {
-            console.log(userAuthors)
             res.status(500).json({
                 error: error
             })

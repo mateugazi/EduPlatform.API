@@ -22,17 +22,11 @@ export const projectSchema = new mongoose.Schema<projectInterface>({
         type: String,
         required: true
     },
-    mentor: {
+    group: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'userSchema',
+        ref: 'groupSchema',
         required: true
     },
-    authors: [{
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'userSchema'
-        }
-    }],
     linkToDemo: {
         type: String
     },

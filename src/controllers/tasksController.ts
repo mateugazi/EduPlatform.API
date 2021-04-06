@@ -47,11 +47,15 @@ export const TasksByProject = async (req:Request, res:Response) => {
     } 
 
     try {
-        const tasksByProject = await Task.find({"project": Types.ObjectId(req.params.id)});
-        if (tasksByProject.length > 0) {
+        const project = await Project.findById(req.params.id);
+
+        if (project) {
+            const tasksByProject = await Task.find({"project": Types.ObjectId(req.params.id)}).populate('user', 'firstName lastName');
+        if (tasksByProject) {
             return res.send(tasksByProject)
         } 
-        res.status(404).send('Tasks not found or incorrect id for project')
+        }
+        res.status(404).send('Project not found')
     } catch (error) {
         res.status(500).json({
             error: error
@@ -180,15 +184,22 @@ export const UpdateTask = async (req:Request,res:Response) => {
         return res.status(400).send('Id is not valid')
     }
 
-    let taskData =  {
+    if ( req.body.userId && !Types.ObjectId.isValid(req.body.userId)) {
+        return res.status(400).send('User Id is not valid');
+    }
+
+    try {
+        const user = await User.findById(req.body.userId); 
+
+        let taskData =  {
             _id: req.params.id,
             name: req.body.name,
             description: req.body.description,
             deadline: req.body.deadline,
-            done: req.body.done
-    } 
+            done: req.body.done,
+            user: user
+        };
 
-    try {
         const task = await Task.findByIdAndUpdate(req.params.id, 
             taskData,
             {new: true});

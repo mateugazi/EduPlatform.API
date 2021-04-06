@@ -136,14 +136,13 @@ describe('/tasks', () => {
             const project = new projectSchema_1.default(newProject);
             yield project.save();
             const response = yield request.get('/project/' + project._id);
-            expect(response.status).toEqual(404);
-            expect(response.text).toEqual('Tasks not found or incorrect id for project');
+            expect(response.status).toEqual(200);
             done();
         }));
         it('with no Project Id in database', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
             const response = yield request.get('/project/6043cf5f981add1944946acc');
             expect(response.status).toEqual(404);
-            expect(response.text).toEqual('Tasks not found or incorrect id for project');
+            expect(response.text).toEqual('Project not found');
             done();
         }));
         it('with incorrect Project Id', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
@@ -225,6 +224,7 @@ describe('/tasks', () => {
                 description: 'Updated task',
                 deadline: 1615923590,
                 done: true,
+                userId: null,
                 projectId: null });
             expect(response.status).toEqual(200);
             expect(response.body.name).toBe(task.name);
@@ -239,6 +239,7 @@ describe('/tasks', () => {
                 description: 'Updated task',
                 deadline: 1615923590,
                 done: true,
+                userId: null,
                 projectId: null });
             expect(response.status).toEqual(404);
             expect(response.text).toEqual('No task to update');
@@ -252,6 +253,7 @@ describe('/tasks', () => {
                 description: 'Updated task',
                 deadline: 1615923590,
                 done: true,
+                userId: null,
                 projectId: null });
             expect(response.status).toEqual(400);
             expect(response.text).toEqual('Id is not valid');

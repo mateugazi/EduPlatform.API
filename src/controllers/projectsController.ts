@@ -63,7 +63,8 @@ exports.projects_add_new_project = async (req: Request, res: Response) => {
         .save()
         .then( (response: any) => {
             res.status(201).json({
-                message: 'Project added successfully!'
+                message: 'Project added successfully!',
+                data: response
             });
         })
         .catch( (error: any) => {
@@ -82,20 +83,23 @@ exports.projects_update_project = async (req: Request, res: Response) => {
     const group = await Group.findById(req.body.group).catch((err: any) => res.status(404).send('Group id is not valid'))
     if (!group) res.status(404).send('Group not found')
 
+    const project = await Project.findById(req.params.projectId)
+
     const projectData = await {
         title: req.body.title,
         description: req.body.description,
         group: group,
         linkToDemo: req.body.linkToDemo,
         linkToGitHub: req.body.linkToGitHub,
-        timestamp: Date.now()
+        timestamp: project.timestamp
     }
 
     Project.findByIdAndUpdate(req.params.projectId, projectData, {new: true})
         .exec()
         .then((response: any) => {
             res.status(200).json({
-                message: "Updated successfully!"
+                message: "Updated successfully!",
+                data: response
             })
         })
         .catch( (error: any) => {
@@ -115,7 +119,8 @@ exports.projects_delete_project = (req: Request, res: Response) => {
         .then((doc: any) => {
             if (doc) {
                 res.status(200).json({
-                    message: "Deleted successfully"
+                    message: "Deleted successfully",
+                    data: doc
                 })
             } else {
                 res.status(404).json({

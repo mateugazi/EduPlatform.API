@@ -444,11 +444,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "mentor": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "authors\r": {
+                "group": {
                   "type": "string",
                   "example": "any"
                 },
@@ -543,11 +539,7 @@
                   "type": "string",
                   "example": "any"
                 },
-                "mentor": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "authors": {
+                "group": {
                   "type": "string",
                   "example": "any"
                 },
@@ -556,10 +548,6 @@
                   "example": "any"
                 },
                 "linkToGitHub": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "authors\r": {
                   "type": "string",
                   "example": "any"
                 }
@@ -888,14 +876,11 @@
         "tags": [
           "Authorization"
         ],
-        "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",
+        "description": "",
         "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
@@ -905,13 +890,8 @@
         "tags": [
           "Authorization"
         ],
-        "description": "Enable created user to login into the page. Returning JWT token.",
+        "description": "",
         "parameters": [
-          {
-            "name": "login",
-            "in": "query",
-            "type": "string"
-          },
           {
             "name": "password",
             "in": "query",
@@ -936,45 +916,11 @@
         "tags": [
           "Authorization"
         ],
-        "description": "Enable to create accounts in our application.",
-        "parameters": [
-          {
-            "name": "firstName",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "lastName",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "login",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "role",
-            "in": "query",
-            "type": "string"
-          }
-        ],
+        "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description":"Bad Request"
           }
         }
       }

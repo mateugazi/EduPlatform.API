@@ -880,11 +880,13 @@
         "tags": [
           "Authorization"
         ],
-        "description": "",
-        "parameters": [],
+        "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -894,8 +896,13 @@
         "tags": [
           "Authorization"
         ],
-        "description": "",
+        "description": "Enable created user to login into the page. Returning JWT token.",
         "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "type": "string"
+          },
           {
             "name": "password",
             "in": "query",
@@ -920,11 +927,45 @@
         "tags": [
           "Authorization"
         ],
-        "description": "",
-        "parameters": [],
+        "description": "Enable to create accounts in our application.",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description":"Bad Request"
           }
         }
       }

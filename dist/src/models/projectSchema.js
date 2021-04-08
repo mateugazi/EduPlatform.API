@@ -13,17 +13,11 @@ exports.projectSchema = new mongoose_1.default.Schema({
         type: String,
         required: true
     },
-    mentor: {
+    group: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'userSchema',
+        ref: 'groupSchema',
         required: true
     },
-    authors: [{
-            user: {
-                type: mongoose_1.default.Schema.Types.ObjectId,
-                ref: 'userSchema'
-            }
-        }],
     linkToDemo: {
         type: String
     },

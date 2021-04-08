@@ -444,11 +444,7 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "mentor": {
-                                    "type": "string",
-                                    "example": "any"
-                                },
-                                "authors\r": {
+                                "group": {
                                     "type": "string",
                                     "example": "any"
                                 },
@@ -543,7 +539,7 @@
                                     "type": "string",
                                     "example": "any"
                                 },
-                                "mentor": {
+                                "group": {
                                     "type": "string",
                                     "example": "any"
                                 },
@@ -552,10 +548,6 @@
                                     "example": "any"
                                 },
                                 "linkToGitHub": {
-                                    "type": "string",
-                                    "example": "any"
-                                },
-                                "authors\r": {
                                     "type": "string",
                                     "example": "any"
                                 }
@@ -719,6 +711,10 @@
                         "schema": {
                             "type": "object",
                             "properties": {
+                                "userId": {
+                                    "type": "string",
+                                    "example": "any"
+                                },
                                 "name": {
                                     "type": "string",
                                     "example": "any"
@@ -731,7 +727,7 @@
                                     "type": "string",
                                     "example": "any"
                                 },
-                                "done\r": {
+                                "done": {
                                     "type": "string",
                                     "example": "any"
                                 }
@@ -884,8 +880,7 @@
                 "tags": [
                     "Authorization"
                 ],
-                "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",
-                "parameters": [],
+                "description": "Provides whole data from userschema collection. Outputs it as a array in the body.", "parameters": [],
                 "responses": {
                     "200": {
                         "description": "OK"

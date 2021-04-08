@@ -13,8 +13,7 @@ const newProject = {
     _id: new mongoose.Types.ObjectId(),
     title: "test project",
     description: "This is first project",
-    mentor: "604a7b12d610101287aa2955",
-    authors: [authorId],
+    group: "606b52280cd20000155ae8a7",
     linkToDemo: 'www.test.pl',
     linkToGitHub: 'www.test.com/test',
     timestamp: Date.now()
@@ -34,8 +33,6 @@ describe('/projects', () => {
         expect(project._id).toBeDefined();
         expect(project.title).toBe(newProject.title);
         expect(project.description).toBe(newProject.description);
-        expect(JSON.stringify(project.mentor)).toEqual(JSON.stringify(newProject.mentor));
-        expect(project.authors.length).toBe(newProject.authors.length);
         expect(project.linkToDemo).toBe(newProject.linkToDemo);
         expect(project.linkToGitHub).toBe(newProject.linkToGitHub);
     });

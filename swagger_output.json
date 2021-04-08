@@ -711,6 +711,10 @@
             "schema": {
               "type": "object",
               "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "any"
+                },
                 "name": {
                   "type": "string",
                   "example": "any"
@@ -723,7 +727,7 @@
                   "type": "string",
                   "example": "any"
                 },
-                "done\r": {
+                "done": {
                   "type": "string",
                   "example": "any"
                 }

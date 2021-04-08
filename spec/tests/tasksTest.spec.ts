@@ -155,15 +155,14 @@ describe('/tasks', () => {
             const project = new Project(newProject)
             await project.save();
             const response = await request.get('/project/' + project._id);
-            expect(response.status).toEqual(404);
-            expect(response.text).toEqual('Tasks not found or incorrect id for project');
+            expect(response.status).toEqual(200);
             done()
         });
 
         it('with no Project Id in database', async done => {
             const response = await request.get('/project/6043cf5f981add1944946acc');
             expect(response.status).toEqual(404);
-            expect(response.text).toEqual('Tasks not found or incorrect id for project');
+            expect(response.text).toEqual('Project not found');
             done()
         })
 
@@ -257,6 +256,7 @@ describe('/tasks', () => {
                 description: 'Updated task',
                 deadline: 1615923590,
                 done: true,
+                userId: null,
                 projectId: null});
 
             expect(response.status).toEqual(200);
@@ -273,6 +273,7 @@ describe('/tasks', () => {
                 description: 'Updated task',
                 deadline: 1615923590,
                 done: true,
+                userId: null,
                 projectId: null});
 
             expect(response.status).toEqual(404);
@@ -288,6 +289,7 @@ describe('/tasks', () => {
                 description: 'Updated task',
                 deadline: 1615923590,
                 done: true,
+                userId: null,
                 projectId: null});
 
             expect(response.status).toEqual(400);

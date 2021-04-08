@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Register = exports.LogIn = exports.ShowAll = exports.isValidPassword = exports.checkLoginForm = void 0;
 const tslib_1 = require("tslib");
-const authorizationSchema_1 = require("../models/authorizationSchema");
+const userSchema_1 = require("../models/userSchema");
 const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
 const bcrypt_1 = tslib_1.__importDefault(require("bcrypt"));
 const jsonwebtoken_1 = tslib_1.__importDefault(require("jsonwebtoken"));
@@ -20,7 +20,7 @@ const isValidPassword = (db_password, password) => {
 };
 exports.isValidPassword = isValidPassword;
 const ShowAll = (request, response) => {
-    mongoose_1.default.connection.db.collection("users", function (err, collection) {
+    mongoose_1.default.connection.db.collection("userschemas", function (err, collection) {
         if (err) {
             response.status(400).send(err);
         }
@@ -33,7 +33,7 @@ const ShowAll = (request, response) => {
 };
 exports.ShowAll = ShowAll;
 const LogIn = (request, response) => {
-    mongoose_1.default.connection.db.collection("users", function (err, collection) {
+    mongoose_1.default.connection.db.collection("userschemas", function (err, collection) {
         if (err) {
             response.status(400).send(err);
         }
@@ -59,7 +59,7 @@ const LogIn = (request, response) => {
 };
 exports.LogIn = LogIn;
 const Register = (request, response) => {
-    const user = new authorizationSchema_1.User({
+    const user = new userSchema_1.User({
         _id: new mongoose_1.default.Types.ObjectId(),
         firstName: request.query.firstName,
         lastName: request.query.lastName,

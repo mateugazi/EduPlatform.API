@@ -93,15 +93,10 @@ Get single project informations using project id.
 Status: 200 OK
 
 {
-    "authors": [
-        "Ania",
-        "Kasia",
-        "Ada"
-    ],
     "_id": "60428ed89187ba2c9807e148",
     "title": "Pro to delete",
     "description": "This is our first project",
-    "mentor": "Józek",
+    "group": "604e2b5a9b420353ec922c4c",
     "linkToDemo": "www.project.asdpl",
     "linkToGitHub": "www.github.pl/project20",
     "timestamp": 1614974680847,
@@ -119,8 +114,7 @@ Create new project.
 | -------------- | ------ |
 | Title          | String |
 | Description    | String |
-| Mentor         | String |
-| Authors        | Array  |
+| Group          | String |
 | Link to demo   | String |
 | Link to GitHub | String |
 
@@ -130,13 +124,9 @@ Create new project.
 
 ```
 {
-  "authors": [
-    "Ania",
-    "zuza"
-  ],
   "title": "First project",
   "description": "This is our first project",
-  "mentor": "Józef",
+  "group": "604e2b5a9b420353ec922c4c",
   "linkToDemo": "www.project.pl",
   "linkToGitHub": "www.github.pl/project"
 }
@@ -168,8 +158,7 @@ Update informations about project using project id.
 | -------------- | ------ |
 | Title          | String |
 | Description    | String |
-| Mentor         | String |
-| Authors        | Array  |
+| Group          | String |
 | Link to demo   | String |
 | Link to GitHub | String |
 
@@ -179,14 +168,9 @@ Update informations about project using project id.
 
 ```
 {
-    "authors": [
-        "Ania",
-        "Kasia",
-        "Ada"
-    ],
     "title": "Pro to delete",
     "description": "This is our first project",
-    "mentor": "Józek",
+    "group": "604e2b5a9b420353ec922c4c",
     "linkToDemo": "www.project.asdpl",
     "linkToGitHub": "www.github.pl/project20",
 }
